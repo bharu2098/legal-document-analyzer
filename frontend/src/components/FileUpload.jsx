@@ -15,7 +15,10 @@ function FileUpload({
 
     if (!file) return;
 
-    // Allow only PDF, DOC and DOCX
+    // ==========================================
+    // Allowed File Types
+    // ==========================================
+
     const allowedTypes = [
       "application/pdf",
       "application/msword",
@@ -24,28 +27,43 @@ function FileUpload({
 
     if (!allowedTypes.includes(file.type)) {
       alert(
-  "❌ Only legal PDF and DOCX documents are allowed."
-);
+        "❌ Only PDF and DOCX files are supported."
+      );
+
       e.target.value = "";
       return;
     }
 
-    // Maximum file size (20 MB)
+    // ==========================================
+    // Max File Size (20MB)
+    // ==========================================
+
     const MAX_FILE_SIZE = 20 * 1024 * 1024;
 
     if (file.size > MAX_FILE_SIZE) {
       alert("❌ File size must be less than 20 MB.");
+
       e.target.value = "";
       return;
     }
 
     const token = localStorage.getItem("token");
 
+    if (!token) {
+      alert("❌ Please login first.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", file);
 
     try {
-      const response = await fetch("https://shimmering-sparkle-production-88ac.up.railway.app/documents/upload",
+      // ==========================================
+      // Upload Document
+      // ==========================================
+
+      const response = await fetch(
+        "https://shimmering-sparkle-production-88ac.up.railway.app/documents/upload",
         {
           method: "POST",
           headers: {
@@ -57,19 +75,41 @@ function FileUpload({
 
       const data = await response.json();
 
+      // ==========================================
+      // Upload Failed
+      // ==========================================
+
       if (!response.ok) {
-  alert(
-    data.detail ||
-      "❌ Upload failed. Please upload a valid legal document."
-  );
+        let message =
+          "❌ Upload failed. Please upload a valid legal document.";
 
-  e.target.value = "";
-  return;
-}
+        if (typeof data.detail === "string") {
+          message = data.detail;
+        }
 
-      // Refresh document list
+        else if (
+          typeof data.detail === "object" &&
+          data.detail !== null
+        ) {
+          message =
+            `❌ ${data.detail.message}\n\n` +
+            `📄 Detected Document: ${data.detail.detected_document_type}\n` +
+            `🎯 Confidence: ${data.detail.confidence}%\n\n` +
+            `📝 Reason:\n${data.detail.reason}`;
+        }
+
+        alert(message);
+
+        e.target.value = "";
+        return;
+      }
+
+      // ==========================================
+      // Refresh Document List
+      // ==========================================
+
       const docsResponse = await fetch(
-       "https://shimmering-sparkle-production-88ac.up.railway.app/documents/",
+        "https://shimmering-sparkle-production-88ac.up.railway.app/documents/",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -82,24 +122,30 @@ function FileUpload({
       if (docsResponse.ok) {
         fetchDocuments();
 
-        // Automatically select uploaded document
+        // Select uploaded document automatically
+
         const uploadedDoc = docs.find(
-          (doc) => doc.id === data.id
+          (doc) =>
+            doc.id === data.document_id
         );
 
         if (uploadedDoc) {
           setSelectedDocument(uploadedDoc);
         }
 
-        alert("✅ Document uploaded successfully.");
+        alert("✅ Legal document uploaded successfully.");
       } else {
-        alert("⚠️ Uploaded successfully, but failed to refresh document list.");
+        alert(
+          "⚠️ Document uploaded successfully, but failed to refresh the document list."
+        );
       }
     } catch (error) {
       console.error(error);
-      alert("❌ Unable to contact the server.");
+
+      alert(
+        "❌ Unable to connect to the server."
+      );
     } finally {
-      // Clear input so the same file can be uploaded again
       e.target.value = "";
     }
   };
@@ -115,15 +161,18 @@ function FileUpload({
       />
 
       <button
-  onClick={handleClick}
-  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition"
->
-  ⚖️ Upload Legal Document
-</button>
+        onClick={handleClick}
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition"
+      >
+        ⚖️ Upload Legal Document
+      </button>
 
-<p className="text-xs text-gray-500 mt-2 text-center">
-  Supports only legal PDF and DOCX documents (Contracts, Agreements, NDAs, Lease Agreements, Court Orders, Legal Notices, etc.)
-</p>
+      <p className="text-xs text-gray-500 mt-2 text-center">
+        Supports legal PDF and DOCX documents such as Employment Contracts,
+        NDAs, Rental Agreements, Lease Agreements, Court Orders,
+        Legal Notices, Privacy Policies, Terms & Conditions,
+        Partnership Agreements and other legal documents.
+      </p>
     </div>
   );
 }
