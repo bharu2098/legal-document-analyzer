@@ -1,5 +1,4 @@
-const BASE_URL =
-  "https://legal-document-analyzer-production-bf96.up.railway.app";
+const BASE_URL = "https://shimmering-sparkle-production-88ac.up.railway.app";
 
 // =======================
 // Handle API Response

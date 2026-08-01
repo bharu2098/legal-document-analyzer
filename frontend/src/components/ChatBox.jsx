@@ -61,7 +61,7 @@ useEffect(() => {
 
    try {
   const response = await fetch(
-    "https://legal-document-analyzer-production-bf96.up.railway.app/chat/",
+    "https://shimmering-sparkle-production-88ac.up.railway.app",
     {
       method: "POST",
       headers: {

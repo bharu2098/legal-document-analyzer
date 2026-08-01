@@ -45,8 +45,7 @@ function FileUpload({
     formData.append("file", file);
 
     try {
-      const response = await fetch(
-        "https://legal-document-analyzer-production-bf96.up.railway.app/documents/upload",
+      const response = await fetch("https://shimmering-sparkle-production-88ac.up.railway.app/documents/upload",
         {
           method: "POST",
           headers: {
@@ -70,7 +69,7 @@ function FileUpload({
 
       // Refresh document list
       const docsResponse = await fetch(
-        "https://legal-document-analyzer-production-bf96.up.railway.app/documents/",
+       "https://shimmering-sparkle-production-88ac.up.railway.app/documents/",
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -16,7 +16,7 @@ function Dashboard() {
 
     try {
       const response = await fetch(
-        "https://legal-document-analyzer-production-bf96.up.railway.app/documents/",
+        "https://shimmering-sparkle-production-88ac.up.railway.app/documents/",
         {
           headers: {
             Authorization: `Bearer ${token}`,
