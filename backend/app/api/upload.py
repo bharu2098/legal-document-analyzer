@@ -16,6 +16,7 @@ from app.services.legal_validator import is_legal_document
 from app.services.legal_insights import generate_legal_insights
 from app.utils.helpers import split_text
 
+
 router = APIRouter(
     prefix="/documents",
     tags=["Documents"],
@@ -48,9 +49,10 @@ async def upload_document(
 
     try:
 
-        # ==========================
+        # ====================================================
         # Extract Text
-        # ==========================
+        # ====================================================
+
         if extension == ".pdf":
             extracted_text = extract_pdf_text(str(file_path))
         else:
@@ -65,10 +67,21 @@ async def upload_document(
                 detail="No readable text found in the uploaded document.",
             )
 
-        # ==========================
+        # ====================================================
         # Validate Legal Document
-        # ==========================
+        # ====================================================
+
         validation = is_legal_document(extracted_text)
+
+        print("\n" + "=" * 80)
+        print("LEGAL DOCUMENT VALIDATION")
+        print("=" * 80)
+        print(f"Filename       : {file.filename}")
+        print(f"Detected Type  : {validation['document_type']}")
+        print(f"Confidence     : {validation['confidence']}%")
+        print(f"Legal Document : {validation['is_legal']}")
+        print(f"Reason         : {validation['reason']}")
+        print("=" * 80 + "\n")
 
         if not validation["is_legal"]:
 
@@ -76,41 +89,45 @@ async def upload_document(
 
             raise HTTPException(
                 status_code=400,
-                detail=(
-                    f"Detected document type: {validation['document_type']}\n\n"
-                    f"Reason: {validation['reason']}\n\n"
-                    "Only legal documents are supported.\n\n"
-                    "Please upload one of the following:\n\n"
-                    "• Employment Contract\n"
-                    "• Service Agreement\n"
-                    "• Rental Agreement\n"
-                    "• Lease Agreement\n"
-                    "• Non-Disclosure Agreement (NDA)\n"
-                    "• Memorandum of Understanding (MoU)\n"
-                    "• Court Order\n"
-                    "• Legal Notice\n"
-                    "• Insurance Policy\n"
-                    "• Affidavit\n"
-                    "• Will\n"
-                    "• Power of Attorney\n"
-                    "• Partnership Agreement\n"
-                    "• Purchase Agreement\n"
-                    "• Vendor Agreement\n"
-                    "• Sale Deed\n"
-                    "• Privacy Policy\n"
-                    "• Terms and Conditions\n"
-                    "• Government Legal Documents"
-                ),
+                detail={
+                    "message": "Only legal documents are supported.",
+                    "detected_document_type": validation["document_type"],
+                    "confidence": validation["confidence"],
+                    "reason": validation["reason"],
+                    "supported_documents": [
+                        "Employment Contract",
+                        "Service Agreement",
+                        "Rental Agreement",
+                        "Lease Agreement",
+                        "Non-Disclosure Agreement (NDA)",
+                        "Memorandum of Understanding (MoU)",
+                        "Court Order",
+                        "Legal Notice",
+                        "Insurance Policy",
+                        "Affidavit",
+                        "Will",
+                        "Power of Attorney",
+                        "Partnership Agreement",
+                        "Purchase Agreement",
+                        "Vendor Agreement",
+                        "Sale Deed",
+                        "Privacy Policy",
+                        "Terms and Conditions",
+                        "Licensing Agreement",
+                    ],
+                },
             )
 
-        # ==========================
-        # Generate Legal Insights
-        # ==========================
+        # ====================================================
+        # Generate AI Legal Insights
+        # ====================================================
+
         legal_summary = generate_legal_insights(extracted_text)
 
-        # ==========================
+        # ====================================================
         # Save Document
-        # ==========================
+        # ====================================================
+
         document = Document(
             filename=file.filename,
             file_type=extension,
@@ -123,14 +140,16 @@ async def upload_document(
         db.commit()
         db.refresh(document)
 
-        # ==========================
+        # ====================================================
         # Split into Chunks
-        # ==========================
+        # ====================================================
+
         chunks = split_text(extracted_text)
 
-        # ==========================
+        # ====================================================
         # Store in ChromaDB
-        # ==========================
+        # ====================================================
+
         vector_store.add_texts(
             texts=chunks,
             metadatas=[
@@ -153,6 +172,7 @@ async def upload_document(
             "characters_extracted": len(extracted_text),
             "chunks_created": len(chunks),
             "document_type": validation["document_type"],
+            "confidence": validation["confidence"],
             "legal_summary": legal_summary,
         }
 
@@ -218,6 +238,7 @@ def delete_document(
         file_path.unlink()
 
     try:
+
         collection = vector_store._collection
 
         results = collection.get(
