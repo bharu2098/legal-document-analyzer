@@ -125,29 +125,36 @@ useEffect(() => {
   <div className="flex-1 min-w-0 min-h-0 flex flex-col bg-gradient-to-br from-slate-950 via-slate-900 to-gray-900 overflow-hidden">
 
       {/* Header */}
-    <div className="bg-slate-900 border-b border-slate-700 px-8 py-5 flex-shrink-0">
+    {/* Header */}
+<div className="bg-slate-900 border-b border-slate-700 px-8 py-5 flex-shrink-0">
 
-          <>
-            <h2 className="text-xl font-bold">
-              📄 {selectedDocument.filename}
-            </h2>
+  {selectedDocument ? (
 
-           <p className="text-sm text-slate-400 mt-1">
-              AI Legal Document Analyzer
-            </p>
-          </>
-        ) : (
-          <>
-           <h2 className="text-2xl font-bold text-white">
-  ⚖️ AI Legal Document Analyzer
-</h2>
+    <>
+      <h2 className="text-2xl font-bold text-white">
+        📄 {selectedDocument.filename}
+      </h2>
 
-            <p className="text-sm text-gray-500">
-  Upload a legal PDF or DOCX document to begin analysis
-</p>
-          </>
-        )}
-      </div>
+      <p className="text-sm text-slate-400 mt-1">
+        AI Legal Document Analyzer
+      </p>
+    </>
+
+  ) : (
+
+    <>
+      <h2 className="text-2xl font-bold text-white">
+        ⚖️ AI Legal Document Analyzer
+      </h2>
+
+      <p className="text-sm text-slate-400 mt-1">
+        Upload a legal PDF or DOCX document to begin analysis
+      </p>
+    </>
+
+  )}
+
+</div>
 
       {/* Chat Area */}
      <div className="flex-1 overflow-y-auto overflow-x-hidden px-8 py-6">
