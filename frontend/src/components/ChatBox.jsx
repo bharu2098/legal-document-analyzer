@@ -59,47 +59,50 @@ useEffect(() => {
 
     const token = localStorage.getItem("token");
 
-    try {
-    fetch("https://legal-document-analyzer-production-bf96.up.railway.app/chat/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          document_id: selectedDocument.id,
-          question,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-  setMessages((prev) => [
-    ...prev,
+   try {
+  const response = await fetch(
+    "https://legal-document-analyzer-production-bf96.up.railway.app/chat/",
     {
-      sender: "ai",
-      text: data.answer,
-      time: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        document_id: selectedDocument.id,
+        question,
       }),
-    },
-  ]);
-} else {
-        setMessages((prev) => [
-          ...prev,
-          {
-  sender: "ai",
-  text: `❌ ${data.detail}`,
-  time: new Date().toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  }),
-}
-        ]);
-      }
-    } catch (error) {
+    }
+  );
+
+  const data = await response.json();
+
+  if (response.ok) {
+    setMessages((prev) => [
+      ...prev,
+      {
+        sender: "ai",
+        text: data.answer,
+        time: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      },
+    ]);
+  } else {
+    setMessages((prev) => [
+      ...prev,
+      {
+        sender: "ai",
+        text: `❌ ${data.detail}`,
+        time: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      },
+    ]);
+  }
+} catch (error) {
       console.error(error);
 
       setMessages((prev) => [

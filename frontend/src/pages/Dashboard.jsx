@@ -12,7 +12,7 @@ function Dashboard() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(fetch("https://legal-document-analyzer-production-bf96.up.railway.app/documents/",  {
+      const response = await fetch("https://legal-document-analyzer-production-bf96.up.railway.app/documents/",  {
         headers: {
           Authorization: `Bearer ${token}`,
         },
