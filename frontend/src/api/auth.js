@@ -34,19 +34,12 @@ export async function registerUser(userData) {
 // LOGIN
 // =======================
 export async function loginUser(userData) {
-  const formData = new URLSearchParams();
-
-  // Swagger OAuth2 expects username/password
-  // We send email as username
-  formData.append("username", userData.email);
-  formData.append("password", userData.password);
-
   const response = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
     },
-    body: formData,
+    body: JSON.stringify(userData),
   });
 
   const data = await response.json();
@@ -63,7 +56,7 @@ export async function loginUser(userData) {
     throw new Error(message);
   }
 
-  // Save JWT token
+  // Save JWT Token
   localStorage.setItem("token", data.access_token);
 
   return data;
