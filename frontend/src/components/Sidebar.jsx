@@ -143,8 +143,7 @@ function Sidebar({
   </span>
 </div>
 
-              {documents.length} Legal Document
-              {documents.length > 1 ? "s" : ""}
+            
 
             
 
@@ -156,17 +155,18 @@ function Sidebar({
                   key={doc.id}
                   onClick={() => setSelectedDocument(doc)}
                   className={`
-                    cursor-pointer
-                    rounded-2xl
-                    border
-                    p-4
-                    transition-all
-                    duration-300
-                    ${
-                      selectedDocument?.id === doc.id
-                        ? "bg-gradient-to-r from-blue-600/20 via-indigo-600/20 to-violet-600/20 border-blue-400 shadow-2xl shadow-blue-900/40 scale-[1.02]"
-                    }
-                  `}
+  cursor-pointer
+  rounded-2xl
+  border
+  p-4
+  transition-all
+  duration-300
+  ${
+    selectedDocument?.id === doc.id
+      ? "bg-gradient-to-r from-blue-600/20 via-indigo-600/20 to-violet-600/20 border-blue-400 shadow-2xl shadow-blue-900/40 scale-[1.02]"
+      : "bg-[#111827] border-slate-700 hover:border-blue-400 hover:bg-slate-800 hover:scale-[1.02]"
+  }
+`}
                 >
 
                   <div className="flex items-start gap-3">
