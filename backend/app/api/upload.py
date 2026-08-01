@@ -57,42 +57,54 @@ async def upload_document(
             extracted_text = extract_docx_text(str(file_path))
 
         if not extracted_text.strip():
+
             file_path.unlink(missing_ok=True)
 
             raise HTTPException(
                 status_code=400,
-                detail="No text found in the uploaded document.",
+                detail="No readable text found in the uploaded document.",
             )
 
         # ==========================
         # Validate Legal Document
         # ==========================
-        if not is_legal_document(extracted_text):
+        validation = is_legal_document(extracted_text)
+
+        if not validation["is_legal"]:
 
             file_path.unlink(missing_ok=True)
 
             raise HTTPException(
                 status_code=400,
                 detail=(
-                    "Only legal documents are allowed.\n\n"
-                    "Supported legal documents include:\n"
-                    "- Employment Contract\n"
-                    "- Rental Agreement\n"
-                    "- Lease Agreement\n"
-                    "- NDA\n"
-                    "- Service Agreement\n"
-                    "- Partnership Agreement\n"
-                    "- Purchase Agreement\n"
-                    "- Insurance Policy\n"
-                    "- Court Order\n"
-                    "- Legal Notice\n"
-                    "- Affidavit\n"
-                    "- Government Legal Documents"
+                    f"Detected document type: {validation['document_type']}\n\n"
+                    f"Reason: {validation['reason']}\n\n"
+                    "Only legal documents are supported.\n\n"
+                    "Please upload one of the following:\n\n"
+                    "• Employment Contract\n"
+                    "• Service Agreement\n"
+                    "• Rental Agreement\n"
+                    "• Lease Agreement\n"
+                    "• Non-Disclosure Agreement (NDA)\n"
+                    "• Memorandum of Understanding (MoU)\n"
+                    "• Court Order\n"
+                    "• Legal Notice\n"
+                    "• Insurance Policy\n"
+                    "• Affidavit\n"
+                    "• Will\n"
+                    "• Power of Attorney\n"
+                    "• Partnership Agreement\n"
+                    "• Purchase Agreement\n"
+                    "• Vendor Agreement\n"
+                    "• Sale Deed\n"
+                    "• Privacy Policy\n"
+                    "• Terms and Conditions\n"
+                    "• Government Legal Documents"
                 ),
             )
 
         # ==========================
-        # Generate AI Legal Insights
+        # Generate Legal Insights
         # ==========================
         legal_summary = generate_legal_insights(extracted_text)
 
@@ -112,7 +124,7 @@ async def upload_document(
         db.refresh(document)
 
         # ==========================
-        # Split Document
+        # Split into Chunks
         # ==========================
         chunks = split_text(extracted_text)
 
@@ -140,6 +152,7 @@ async def upload_document(
             "owner_id": current_user.id,
             "characters_extracted": len(extracted_text),
             "chunks_created": len(chunks),
+            "document_type": validation["document_type"],
             "legal_summary": legal_summary,
         }
 

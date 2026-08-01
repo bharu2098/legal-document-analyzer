@@ -16,81 +16,131 @@ router = APIRouter(
 )
 
 
+# ==========================================
+# Register
+# ==========================================
 @router.post("/register", response_model=UserResponse)
 def register(
     user: UserCreate,
     db: Session = Depends(get_db),
 ):
-    existing_email = (
-        db.query(User)
-        .filter(User.email == user.email)
-        .first()
-    )
+    """
+    Register a new user.
+    """
 
-    if existing_email:
-        raise HTTPException(
-            status_code=400,
-            detail="Email already registered",
+    try:
+        email = user.email.strip().lower()
+        username = user.username.strip()
+
+        # Check email
+        existing_email = (
+            db.query(User)
+            .filter(User.email == email)
+            .first()
         )
 
-    existing_username = (
-        db.query(User)
-        .filter(User.username == user.username)
-        .first()
-    )
+        if existing_email:
+            raise HTTPException(
+                status_code=400,
+                detail="Email already registered.",
+            )
 
-    if existing_username:
-        raise HTTPException(
-            status_code=400,
-            detail="Username already exists",
+        # Check username
+        existing_username = (
+            db.query(User)
+            .filter(User.username == username)
+            .first()
         )
 
-    new_user = User(
-        username=user.username,
-        email=user.email,
-        hashed_password=hash_password(user.password),
-    )
+        if existing_username:
+            raise HTTPException(
+                status_code=400,
+                detail="Username already exists.",
+            )
 
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
+        # Create user
+        new_user = User(
+            username=username,
+            email=email,
+            hashed_password=hash_password(user.password),
+        )
 
-    return new_user
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+
+        return new_user
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        db.rollback()
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"Registration failed: {str(e)}",
+        )
 
 
+# ==========================================
+# Login
+# ==========================================
 @router.post("/login")
 def login(
     user: UserLogin,
     db: Session = Depends(get_db),
 ):
-    db_user = (
-        db.query(User)
-        .filter(User.email == user.email)
-        .first()
-    )
+    """
+    Authenticate user and return JWT token.
+    """
 
-    if not db_user:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid email or password",
+    try:
+        email = user.email.strip().lower()
+
+        db_user = (
+            db.query(User)
+            .filter(User.email == email)
+            .first()
         )
 
-    if not verify_password(
-        user.password,
-        db_user.hashed_password,
-    ):
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid email or password",
+        if not db_user:
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid email or password.",
+            )
+
+        if not verify_password(
+            user.password,
+            db_user.hashed_password,
+        ):
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid email or password.",
+            )
+
+        access_token = create_access_token(
+            data={
+                "sub": db_user.email,
+            }
         )
 
-    access_token = create_access_token(
-        data={
-            "sub": db_user.email
+        return {
+            "message": "Login successful.",
+            "access_token": access_token,
+            "token_type": "bearer",
+            "user": {
+                "id": db_user.id,
+                "username": db_user.username,
+                "email": db_user.email,
+            },
         }
-    )
 
-    return {
-        "access_token": access_token,
-        "token_type": "bearer",
-    }
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Login failed: {str(e)}",
+        )

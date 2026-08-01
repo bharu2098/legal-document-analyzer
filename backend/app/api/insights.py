@@ -18,23 +18,50 @@ def get_legal_insights(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    document = (
-        db.query(Document)
-        .filter(
-            Document.id == document_id,
-            Document.owner_id == current_user.id,
-        )
-        .first()
-    )
+    """
+    Retrieve AI-generated legal insights for a specific document.
+    Only the document owner can access these insights.
+    """
 
-    if document is None:
+    try:
+        # ==========================================
+        # Verify Ownership
+        # ==========================================
+        document = (
+            db.query(Document)
+            .filter(
+                Document.id == document_id,
+                Document.owner_id == current_user.id,
+            )
+            .first()
+        )
+
+        if document is None:
+            raise HTTPException(
+                status_code=404,
+                detail="Document not found.",
+            )
+
+        # ==========================================
+        # Build Response
+        # ==========================================
+        return {
+            "success": True,
+            "document": {
+                "id": document.id,
+                "filename": document.filename,
+                "file_type": document.file_type,
+                "owner_id": document.owner_id,
+                "characters": len(document.content or ""),
+                "legal_summary": document.legal_summary,
+            },
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
         raise HTTPException(
-            status_code=404,
-            detail="Document not found.",
+            status_code=500,
+            detail=f"Failed to retrieve legal insights: {str(e)}",
         )
-
-    return {
-        "document_id": document.id,
-        "filename": document.filename,
-        "legal_summary": document.legal_summary,
-    }

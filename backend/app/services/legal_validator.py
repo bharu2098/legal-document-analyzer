@@ -1,6 +1,9 @@
+import json
+
 from langchain_groq import ChatGroq
 
 from app.core.config import settings
+
 
 llm = ChatGroq(
     model="llama-3.3-70b-versatile",
@@ -9,12 +12,18 @@ llm = ChatGroq(
 )
 
 
-def is_legal_document(text: str) -> bool:
+def is_legal_document(text: str):
     """
-    Returns True only if the uploaded document is a legal document.
+    Validate whether the uploaded document is a legal document.
+
+    Returns:
+    {
+        "is_legal": bool,
+        "document_type": str,
+        "reason": str
+    }
     """
 
-    # Use beginning and end of the document
     document_text = f"""
 Beginning of document:
 {text[:2500]}
@@ -28,9 +37,9 @@ End of document:
     prompt = f"""
 You are an expert legal document classifier.
 
-Your job is to determine whether the uploaded document is a LEGAL DOCUMENT.
+Your task is to determine whether the uploaded document is a LEGAL DOCUMENT.
 
-Examples of LEGAL documents include:
+A LEGAL document includes:
 
 - Employment Contract
 - Service Agreement
@@ -45,36 +54,62 @@ Examples of LEGAL documents include:
 - Will
 - Power of Attorney
 - Government Legal Document
-- Terms and Conditions
 - Privacy Policy
+- Terms and Conditions
 - Partnership Agreement
 - Purchase Agreement
 - Vendor Agreement
 - Sale Deed
+- Employment Offer Letter
+- Employment Policy
+- Legal Compliance Document
+- Arbitration Agreement
+- Intellectual Property Agreement
+- Licensing Agreement
 
-Examples of NON-LEGAL documents include:
+A NON-LEGAL document includes:
 
 - Resume
-- Technical Documentation
-- Project Report
+- CV
 - Research Paper
+- Technical Documentation
+- Software Design Document
+- Software Requirements Specification
+- Project Report
 - Assignment
-- Interview Questions
 - Presentation
 - User Manual
-- Invoice
+- Tutorial
 - Book
 - Notes
-- Tutorial
 - Course Material
+- Invoice
+- Receipt
+- Product Catalogue
+- Marketing Brochure
+- Business Proposal
+- Source Code
+- API Documentation
 
-Reply with ONLY one word.
+Read the ENTIRE document carefully.
 
-YES
+Return ONLY valid JSON.
 
-or
+Example for legal document:
 
-NO
+{{
+    "is_legal": true,
+    "document_type": "Employment Contract",
+    "reason": "The document establishes legally enforceable obligations between parties."
+}}
+
+Example for non-legal document:
+
+{{
+    "is_legal": false,
+    "document_type": "Software Design Document",
+    "reason": "The document describes software architecture rather than legal obligations."
+}}
 
 Document:
 
@@ -84,10 +119,27 @@ Document:
     try:
         response = llm.invoke(prompt)
 
-        answer = response.content.strip().upper()
+        content = response.content.strip()
 
-        return answer == "YES"
+        result = json.loads(content)
+
+        return {
+            "is_legal": bool(result.get("is_legal", False)),
+            "document_type": result.get(
+                "document_type",
+                "Unknown"
+            ),
+            "reason": result.get(
+                "reason",
+                "No reason provided."
+            ),
+        }
 
     except Exception as e:
         print("Legal validation error:", e)
-        raise
+
+        return {
+            "is_legal": False,
+            "document_type": "Unknown",
+            "reason": "Unable to classify the uploaded document."
+        }
