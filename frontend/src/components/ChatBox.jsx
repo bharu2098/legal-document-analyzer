@@ -122,23 +122,23 @@ useEffect(() => {
   };
 
   return (
-   <div className="flex-1 min-w-0 min-h-0 flex flex-col bg-gray-100 overflow-hidden">
+  <div className="flex-1 min-w-0 min-h-0 flex flex-col bg-gradient-to-br from-slate-950 via-slate-900 to-gray-900 overflow-hidden">
 
       {/* Header */}
-      <div className="bg-white border-b p-5">
+     <div className="bg-slate-900 border-b border-slate-700 px-8 py-6 shadow-lg">
         {selectedDocument ? (
           <>
             <h2 className="text-xl font-bold">
               📄 {selectedDocument.filename}
             </h2>
 
-            <p className="text-sm text-gray-500">
+           <p className="text-sm text-slate-400 mt-1">
               AI Legal Document Analyzer
             </p>
           </>
         ) : (
           <>
-            <h2 className="text-xl font-bold">
+           <h2 className="text-2xl font-bold text-white">
   ⚖️ AI Legal Document Analyzer
 </h2>
 
@@ -150,18 +150,17 @@ useEffect(() => {
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-6">
+     <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-10 py-8">
 
         {/* Welcome Screen */}
         {!selectedDocument && messages.length === 0 && (
           <div className="h-full flex items-center justify-center">
             <div className="text-center">
 
-              <h1 className="text-4xl font-bold mb-4">
+              <h1 className="text-5xl font-extrabold text-white mb-5">
   ⚖️ AI Legal Document Analyzer
 </h1>
-
-<p className="text-lg text-gray-500">
+<p className="text-lg text-slate-400 max-w-3xl mx-auto leading-8">
   Upload a legal PDF or DOCX document such as a Contract, Agreement, NDA, Lease Agreement, Court Order, Legal Notice, or Insurance Policy and ask AI questions about it.
 </p>
 
@@ -187,7 +186,7 @@ useEffect(() => {
                   <div className="space-y-3 text-left max-w-lg mx-auto">
              <button
   onClick={() => sendQuestion("Summarize this legal document")}
-  className="w-full text-left p-4 border rounded-xl hover:bg-blue-50 transition"
+  className="w-full text-left p-5 rounded-2xl bg-slate-800 border border-slate-700 text-slate-200 hover:bg-slate-700 hover:border-blue-500 transition duration-300"
 >
   📌 Summarize this legal document
 </button>
@@ -231,14 +230,14 @@ useEffect(() => {
                 <div
   className={`max-w-[75%] min-w-0 overflow-hidden rounded-xl shadow px-5 py-4 ${
                     msg.sender === "user"
-                      ? "bg-blue-600 text-white"
-                      : "bg-white border"
+                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white"
+                      : "bg-slate-800 border border-slate-700 text-slate-100"
                   }`}
                 >
                   <p className="text-xs font-semibold mb-2">
   {msg.sender === "user"
     ? "👤 You"
-    : "⚖️ AI Legal Analyzer"}
+    : "🤖 AI Legal Assistant"}
 </p>
 
                   <div className="flex justify-between items-start gap-3">
@@ -258,7 +257,7 @@ useEffect(() => {
       setCopiedIndex(null);
     }, 2000);
   }}
-  className="text-gray-500 hover:text-blue-600 transition"
+ className="text-slate-400 hover:text-blue-400 transition"
   title="Copy Answer"
 >
   {copiedIndex === index ? "✅" : "📋"}
@@ -281,13 +280,13 @@ useEffect(() => {
 
             {loading && (
               <div className="flex justify-start mb-4">
-                <div className="bg-white border rounded-xl shadow px-5 py-4">
+                <div className="bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl px-6 py-5 text-white">
 
                   <p className="text-xs font-semibold mb-2">
                     ⚖️ AI Legal Analyzer
                   </p>
 
-                  <p className="text-gray-500 mb-3">
+                  <p className="text-slate-300 mb-3">
   ⚖️ Analyzing the legal document and preparing your answer...
 </p>
 

@@ -24,7 +24,7 @@ function ChatInput({
   };
 
   return (
-    <div className="border-t bg-white p-4 flex gap-3">
+    <div className="border-t border-slate-700 bg-slate-900 px-8 py-6 flex gap-4">
 
       <input
         autoFocus
@@ -46,7 +46,7 @@ function ChatInput({
         onClick={handleSend}
         disabled={disabled}
         title="Ask AI about this legal document"
-        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed transition duration-200"
+        className="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-5 py-4 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
       >
         {loading ? "⚖️ Analyzing..." : "Send"}
       </button>

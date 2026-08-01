@@ -15,9 +15,9 @@ function FileUpload({
 
     if (!file) return;
 
-    // ==========================================
+    // ======================================================
     // Allowed File Types
-    // ==========================================
+    // ======================================================
 
     const allowedTypes = [
       "application/pdf",
@@ -26,17 +26,15 @@ function FileUpload({
     ];
 
     if (!allowedTypes.includes(file.type)) {
-      alert(
-        "❌ Only PDF and DOCX files are supported."
-      );
+      alert("❌ Only PDF and DOCX files are supported.");
 
       e.target.value = "";
       return;
     }
 
-    // ==========================================
-    // Max File Size (20MB)
-    // ==========================================
+    // ======================================================
+    // Maximum File Size
+    // ======================================================
 
     const MAX_FILE_SIZE = 20 * 1024 * 1024;
 
@@ -58,9 +56,9 @@ function FileUpload({
     formData.append("file", file);
 
     try {
-      // ==========================================
+      // ======================================================
       // Upload Document
-      // ==========================================
+      // ======================================================
 
       const response = await fetch(
         "https://shimmering-sparkle-production-88ac.up.railway.app/documents/upload",
@@ -75,9 +73,9 @@ function FileUpload({
 
       const data = await response.json();
 
-      // ==========================================
+      // ======================================================
       // Upload Failed
-      // ==========================================
+      // ======================================================
 
       if (!response.ok) {
         let message =
@@ -85,16 +83,14 @@ function FileUpload({
 
         if (typeof data.detail === "string") {
           message = data.detail;
-        }
-
-        else if (
+        } else if (
           typeof data.detail === "object" &&
           data.detail !== null
         ) {
           message =
             `❌ ${data.detail.message}\n\n` +
-            `📄 Detected Document: ${data.detail.detected_document_type}\n` +
-            `🎯 Confidence: ${data.detail.confidence}%\n\n` +
+            `📄 Detected Document : ${data.detail.detected_document_type}\n` +
+            `🎯 Confidence        : ${data.detail.confidence}%\n\n` +
             `📝 Reason:\n${data.detail.reason}`;
         }
 
@@ -104,9 +100,9 @@ function FileUpload({
         return;
       }
 
-      // ==========================================
-      // Refresh Document List
-      // ==========================================
+      // ======================================================
+      // Refresh Documents
+      // ======================================================
 
       const docsResponse = await fetch(
         "https://shimmering-sparkle-production-88ac.up.railway.app/documents/",
@@ -122,11 +118,8 @@ function FileUpload({
       if (docsResponse.ok) {
         fetchDocuments();
 
-        // Select uploaded document automatically
-
         const uploadedDoc = docs.find(
-          (doc) =>
-            doc.id === data.document_id
+          (doc) => doc.id === data.document_id
         );
 
         if (uploadedDoc) {
@@ -142,16 +135,15 @@ function FileUpload({
     } catch (error) {
       console.error(error);
 
-      alert(
-        "❌ Unable to connect to the server."
-      );
+      alert("❌ Unable to connect to the server.");
     } finally {
       e.target.value = "";
     }
   };
+    return (
+    <div className="space-y-5">
 
-  return (
-    <div>
+      {/* Hidden File Input */}
       <input
         ref={fileInputRef}
         type="file"
@@ -160,19 +152,108 @@ function FileUpload({
         onChange={handleFileChange}
       />
 
+      {/* Upload Button */}
       <button
         onClick={handleClick}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition"
+        className="
+          w-full
+          py-4
+          rounded-2xl
+          bg-gradient-to-r
+          from-indigo-600
+          via-violet-600
+          to-blue-600
+          hover:from-indigo-500
+          hover:via-violet-500
+          hover:to-blue-500
+          text-white
+          text-base
+          font-semibold
+          shadow-xl
+          shadow-indigo-900/40
+          transition-all
+          duration-300
+          hover:scale-[1.02]
+          active:scale-95
+        "
       >
         ⚖️ Upload Legal Document
       </button>
 
-      <p className="text-xs text-gray-500 mt-2 text-center">
-        Supports legal PDF and DOCX documents such as Employment Contracts,
-        NDAs, Rental Agreements, Lease Agreements, Court Orders,
-        Legal Notices, Privacy Policies, Terms & Conditions,
-        Partnership Agreements and other legal documents.
-      </p>
+      {/* Supported Documents Card */}
+      <div className="rounded-2xl border border-slate-700 bg-[#111827] p-5 shadow-lg">
+
+        <h3 className="text-white font-bold text-sm uppercase tracking-wider mb-4">
+          Supported Legal Documents
+        </h3>
+
+        <div className="space-y-2 text-sm text-slate-300">
+
+          <div>📄 Employment Contract</div>
+
+          <div>📄 Service Agreement</div>
+
+          <div>📄 Rental Agreement</div>
+
+          <div>📄 Lease Agreement</div>
+
+          <div>📄 Non-Disclosure Agreement (NDA)</div>
+
+          <div>📄 Memorandum of Understanding (MoU)</div>
+
+          <div>📄 Court Order</div>
+
+          <div>📄 Legal Notice</div>
+
+          <div>📄 Insurance Policy</div>
+
+          <div>📄 Privacy Policy</div>
+
+          <div>📄 Terms & Conditions</div>
+
+          <div>📄 Partnership Agreement</div>
+
+        </div>
+
+      </div>
+
+      {/* Information Card */}
+      <div className="rounded-2xl border border-indigo-500/30 bg-gradient-to-r from-indigo-600/10 to-violet-600/10 p-4">
+
+        <h4 className="text-indigo-300 font-semibold mb-2">
+          AI Validation
+        </h4>
+
+        <p className="text-xs text-slate-300 leading-6">
+          Every uploaded document is automatically analyzed by AI.
+          Only genuine legal documents such as contracts,
+          agreements, court orders, legal notices, policies and
+          similar legal documents are accepted.
+        </p>
+
+      </div>
+
+      {/* Limits */}
+      <div className="rounded-xl bg-[#0F172A] border border-slate-700 p-4">
+
+        <h4 className="text-white font-semibold mb-2">
+          Upload Limits
+        </h4>
+
+        <div className="space-y-2 text-xs text-slate-400">
+
+          <p>✅ PDF & DOCX only</p>
+
+          <p>✅ Maximum file size: 20 MB</p>
+
+          <p>✅ AI Legal Document Validation</p>
+
+          <p>✅ Secure cloud processing</p>
+
+        </div>
+
+      </div>
+
     </div>
   );
 }
