@@ -122,8 +122,7 @@ useEffect(() => {
   };
 
   return (
-    <div className="flex-1 min-w-0 flex flex-col bg-gray-100 overflow-hidden">
-
+   <div className="flex-1 min-w-0 min-h-0 flex flex-col bg-gray-100 overflow-hidden">
 
       {/* Header */}
       <div className="bg-white border-b p-5">
@@ -151,7 +150,7 @@ useEffect(() => {
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 overflow-x-hidden overflow-y-auto p-6">
+      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-6">
 
         {/* Welcome Screen */}
         {!selectedDocument && messages.length === 0 && (

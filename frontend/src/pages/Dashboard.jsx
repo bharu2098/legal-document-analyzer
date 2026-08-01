@@ -81,7 +81,7 @@ function Dashboard() {
           clearChat={clearChat}
         />
 
-        <div className="flex-1 min-w-0 overflow-hidden">
+        <div className="flex-1 min-w-0 min-h-0 flex overflow-hidden">
 
           {loading ? (
 
