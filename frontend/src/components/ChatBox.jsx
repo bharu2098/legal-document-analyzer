@@ -61,7 +61,7 @@ useEffect(() => {
 
    try {
   const response = await fetch(
-    "https://shimmering-sparkle-production-88ac.up.railway.app",
+    "https://shimmering-sparkle-production-88ac.up.railway.app/chat/",
     {
       method: "POST",
       headers: {
