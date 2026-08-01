@@ -12,7 +12,7 @@ function ChatInput({
   const handleSend = () => {
     if (!question.trim() || disabled) return;
 
-    onSend(question);
+    onSend(question.trim());
     setQuestion("");
   };
 
@@ -25,12 +25,15 @@ function ChatInput({
 
   return (
     <div className="border-t bg-white p-4 flex gap-3">
+
       <input
+        autoFocus
+        maxLength={500}
         type="text"
         placeholder={
           selectedDocument
-            ? "Ask anything about this document..."
-            : "Upload and select a document first..."
+            ? "Ask a question about this legal document..."
+            : "Upload and select a legal document first..."
         }
         value={question}
         onChange={(e) => setQuestion(e.target.value)}
@@ -42,10 +45,12 @@ function ChatInput({
       <button
         onClick={handleSend}
         disabled={disabled}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed transition"
+        title="Ask AI about this legal document"
+        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed transition duration-200"
       >
-        {loading ? "Sending..." : "Send"}
+        {loading ? "⚖️ Analyzing..." : "Send"}
       </button>
+
     </div>
   );
 }

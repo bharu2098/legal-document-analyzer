@@ -23,7 +23,9 @@ function FileUpload({
     ];
 
     if (!allowedTypes.includes(file.type)) {
-      alert("❌ Only PDF, DOC, and DOCX files are allowed.");
+      alert(
+  "❌ Only legal PDF and DOCX documents are allowed."
+);
       e.target.value = "";
       return;
     }
@@ -57,10 +59,14 @@ function FileUpload({
       const data = await response.json();
 
       if (!response.ok) {
-        alert(data.detail || "Upload failed.");
-        e.target.value = "";
-        return;
-      }
+  alert(
+    data.detail ||
+      "❌ Upload failed. Please upload a valid legal document."
+  );
+
+  e.target.value = "";
+  return;
+}
 
       // Refresh document list
       const docsResponse = await fetch(
@@ -110,11 +116,15 @@ function FileUpload({
       />
 
       <button
-        onClick={handleClick}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition"
-      >
-        Upload Document
-      </button>
+  onClick={handleClick}
+  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition"
+>
+  ⚖️ Upload Legal Document
+</button>
+
+<p className="text-xs text-gray-500 mt-2 text-center">
+  Supports only legal PDF and DOCX documents (Contracts, Agreements, NDAs, Lease Agreements, Court Orders, Legal Notices, etc.)
+</p>
     </div>
   );
 }

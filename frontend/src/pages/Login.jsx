@@ -40,7 +40,7 @@ function Login() {
 
       localStorage.setItem("token", data.access_token);
 
-      alert("Login Successful!");
+      alert("✅ Login successful.");
 
       navigate("/dashboard");
     } catch (error) {
@@ -55,12 +55,12 @@ function Login() {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
 
         <h1 className="text-3xl font-bold text-center text-blue-600">
-          Legal Document Analyzer
-        </h1>
+  ⚖️ AI Legal Document Analyzer
+</h1>
 
         <p className="text-center text-gray-500 mt-2 mb-8">
-          Sign in to continue
-        </p>
+  Securely sign in to analyze your legal documents using AI.
+</p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
 
@@ -75,7 +75,7 @@ function Login() {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder="Enter your email"
+              placeholder="Enter your registered email"
               className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -105,13 +105,13 @@ function Login() {
                 : "bg-blue-600 hover:bg-blue-700 text-white"
             }`}
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Signing In..." : "Sign In"}
           </button>
 
         </form>
 
         <p className="text-center mt-6 text-gray-600">
-          Don't have an account?{" "}
+          New to AI Legal Document Analyzer?{" "}
           <Link
             to="/register"
             className="text-blue-600 font-semibold hover:underline"

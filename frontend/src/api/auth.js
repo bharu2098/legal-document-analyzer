@@ -1,72 +1,88 @@
 const BASE_URL =
-  "https://legal-document-analyzer-production-bf96.up.railway.app";
+  import.meta.env.VITE_API_URL ||
+  "http://127.0.0.1:8000";
 
 // =======================
-// REGISTER
+// Handle API Errors
 // =======================
-export async function registerUser(userData) {
-  const response = await fetch(`${BASE_URL}/auth/register`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userData),
-  });
-
+async function handleResponse(response) {
   const data = await response.json();
 
   if (!response.ok) {
-    let message = "Registration failed";
+    let message = "Something went wrong.";
 
     if (typeof data.detail === "string") {
       message = data.detail;
     } else if (Array.isArray(data.detail)) {
-      message = data.detail.map((err) => err.msg).join(", ");
+      message = data.detail
+        .map((err) => err.msg)
+        .join(", ");
     }
 
     throw new Error(message);
   }
 
   return data;
+}
+
+// =======================
+// REGISTER
+// =======================
+export async function registerUser(userData) {
+  const response = await fetch(
+    `${BASE_URL}/auth/register`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    }
+  );
+
+  return await handleResponse(response);
 }
 
 // =======================
 // LOGIN
 // =======================
 export async function loginUser(userData) {
-  const response = await fetch(`${BASE_URL}/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userData),
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    let message = "Login failed";
-
-    if (typeof data.detail === "string") {
-      message = data.detail;
-    } else if (Array.isArray(data.detail)) {
-      message = data.detail.map((err) => err.msg).join(", ");
+  const response = await fetch(
+    `${BASE_URL}/auth/login`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
     }
+  );
 
-    throw new Error(message);
-  }
+  const data = await handleResponse(response);
 
-  // Save JWT Token
-  localStorage.setItem("token", data.access_token);
+  localStorage.setItem(
+    "token",
+    data.access_token
+  );
 
   return data;
 }
 
 // =======================
-// GET TOKEN
+// TOKEN
 // =======================
 export function getToken() {
   return localStorage.getItem("token");
+}
+
+// =======================
+// AUTH HEADER
+// =======================
+export function getAuthHeaders() {
+  return {
+    Authorization: `Bearer ${getToken()}`,
+    "Content-Type": "application/json",
+  };
 }
 
 // =======================
@@ -75,3 +91,8 @@ export function getToken() {
 export function logoutUser() {
   localStorage.removeItem("token");
 }
+
+// =======================
+// API URL
+// =======================
+export { BASE_URL };

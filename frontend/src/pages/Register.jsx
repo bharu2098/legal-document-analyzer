@@ -23,12 +23,28 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Frontend Validation
+    if (!formData.username.trim()) {
+      alert("Please enter your username.");
+      return;
+    }
+
+    if (!formData.email.trim()) {
+      alert("Please enter your email.");
+      return;
+    }
+
+    if (!formData.password.trim()) {
+      alert("Please enter your password.");
+      return;
+    }
+
     setLoading(true);
 
     try {
       await registerUser(formData);
 
-      alert("Registration successful!");
+      alert("✅ Registration successful. Please sign in.");
 
       navigate("/login");
     } catch (error) {
@@ -43,11 +59,11 @@ function Register() {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
 
         <h1 className="text-3xl font-bold text-center text-blue-600">
-          Legal Document Analyzer
+          ⚖️ AI Legal Document Analyzer
         </h1>
 
         <p className="text-center text-gray-500 mt-2 mb-8">
-          Create your account
+          Create your account to securely analyze legal documents using AI.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -62,7 +78,7 @@ function Register() {
               name="username"
               value={formData.username}
               onChange={handleChange}
-              placeholder="Enter username"
+              placeholder="Choose a username"
               className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -92,7 +108,7 @@ function Register() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Create a password"
+              placeholder="Create a secure password"
               className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -100,9 +116,13 @@ function Register() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
+            className={`w-full py-3 rounded-lg font-semibold transition ${
+              loading
+                ? "bg-blue-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700 text-white"
+            }`}
           >
-            {loading ? "Registering..." : "Register"}
+            {loading ? "Creating Account..." : "Create Account"}
           </button>
 
         </form>
@@ -111,9 +131,9 @@ function Register() {
           Already have an account?{" "}
           <Link
             to="/login"
-            className="text-blue-600 font-semibold"
+            className="text-blue-600 font-semibold hover:underline"
           >
-            Login
+            Sign In
           </Link>
         </p>
 

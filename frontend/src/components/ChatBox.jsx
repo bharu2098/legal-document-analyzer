@@ -32,7 +32,7 @@ useEffect(() => {
   setMessages([
     {
       sender: "ai",
-      text: "📄 Please upload and select a document before asking questions.",
+      text: "⚖️ Please upload and select a legal document before asking questions.",
       time: new Date().toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -139,12 +139,12 @@ useEffect(() => {
         ) : (
           <>
             <h2 className="text-xl font-bold">
-              🤖 AI Legal Document Analyzer
-            </h2>
+  ⚖️ AI Legal Document Analyzer
+</h2>
 
             <p className="text-sm text-gray-500">
-              Upload a document to begin chatting
-            </p>
+  Upload a legal PDF or DOCX document to begin analysis
+</p>
           </>
         )}
       </div>
@@ -162,7 +162,7 @@ useEffect(() => {
 </h1>
 
 <p className="text-lg text-gray-500">
-  Upload a PDF or DOCX document and ask questions using AI.
+  Upload a legal PDF or DOCX document such as a Contract, Agreement, NDA, Lease Agreement, Court Order, Legal Notice, or Insurance Policy and ask AI questions about it.
 </p>
 
             </div>
@@ -181,36 +181,36 @@ useEffect(() => {
                   </h2>
 
                   <p className="text-gray-500 mb-6">
-                    Ask anything about this legal document.
+                  Ask questions about clauses, obligations, penalties, dates, parties, risks, or request a complete summary.
                   </p>
 
                   <div className="space-y-3 text-left max-w-lg mx-auto">
-<button
-  onClick={() => sendQuestion("Summarize this document")}
+             <button
+  onClick={() => sendQuestion("Summarize this legal document")}
   className="w-full text-left p-4 border rounded-xl hover:bg-blue-50 transition"
 >
-  📌 Summarize this document
+  📌 Summarize this legal document
 </button>
 
 <button
-  onClick={() => sendQuestion("What are the objectives of this project?")}
+  onClick={() => sendQuestion("What are the key legal points?")}
   className="w-full text-left p-4 border rounded-xl hover:bg-blue-50 transition"
 >
-  📌 What are the objectives of this project?
+  📌 What are the key legal points?
 </button>
 
 <button
-  onClick={() => sendQuestion("Explain the RAG workflow")}
+  onClick={() => sendQuestion("What obligations or responsibilities are mentioned?")}
   className="w-full text-left p-4 border rounded-xl hover:bg-blue-50 transition"
 >
-  📌 Explain the RAG workflow
+  📌 What obligations or responsibilities are mentioned?
 </button>
 
 <button
-  onClick={() => sendQuestion("Which technologies are used?")}
+  onClick={() => sendQuestion("Are there any important dates, penalties, or risks?")}
   className="w-full text-left p-4 border rounded-xl hover:bg-blue-50 transition"
 >
-  📌 Which technologies are used?
+  📌 Are there any important dates, penalties, or risks?
 </button>
 
                   </div>
@@ -236,10 +236,10 @@ useEffect(() => {
                   }`}
                 >
                   <p className="text-xs font-semibold mb-2">
-                    {msg.sender === "user"
-                      ? "👤 You"
-                      : "🤖 AI Legal Assistant"}
-                  </p>
+  {msg.sender === "user"
+    ? "👤 You"
+    : "⚖️ AI Legal Analyzer"}
+</p>
 
                   <div className="flex justify-between items-start gap-3">
   <p className="whitespace-pre-wrap flex-1">
@@ -282,11 +282,11 @@ useEffect(() => {
                 <div className="bg-white border rounded-xl shadow px-5 py-4">
 
                   <p className="text-xs font-semibold mb-2">
-                    🤖 AI Legal Assistant
+                    ⚖️ AI Legal Analyzer
                   </p>
 
                   <p className="text-gray-500 mb-3">
-  🤖 Reading the document and preparing your answer...
+  ⚖️ Analyzing the legal document and preparing your answer...
 </p>
 
                   <div className="flex gap-2">
@@ -323,10 +323,10 @@ useEffect(() => {
                   }`}
                 >
                   <p className="text-xs font-semibold mb-2">
-                    {msg.sender === "user"
-                      ? "👤 You"
-                      : "🤖 AI Legal Assistant"}
-                  </p>
+  {msg.sender === "user"
+    ? "👤 You"
+    : "⚖️ AI Legal Analyzer"}
+</p>
 
                   <p className="whitespace-pre-wrap">
   {msg.text}
