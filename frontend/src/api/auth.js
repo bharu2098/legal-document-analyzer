@@ -1,12 +1,17 @@
 const BASE_URL =
-  import.meta.env.VITE_API_URL ||
-  "http://127.0.0.1:8000";
+  "https://legal-document-analyzer-production-bf96.up.railway.app";
 
 // =======================
-// Handle API Errors
+// Handle API Response
 // =======================
 async function handleResponse(response) {
-  const data = await response.json();
+  let data = {};
+
+  try {
+    data = await response.json();
+  } catch (error) {
+    data = {};
+  }
 
   if (!response.ok) {
     let message = "Something went wrong.";
@@ -17,6 +22,8 @@ async function handleResponse(response) {
       message = data.detail
         .map((err) => err.msg)
         .join(", ");
+    } else if (data.message) {
+      message = data.message;
     }
 
     throw new Error(message);
@@ -60,23 +67,20 @@ export async function loginUser(userData) {
 
   const data = await handleResponse(response);
 
-  localStorage.setItem(
-    "token",
-    data.access_token
-  );
+  localStorage.setItem("token", data.access_token);
 
   return data;
 }
 
 // =======================
-// TOKEN
+// GET TOKEN
 // =======================
 export function getToken() {
   return localStorage.getItem("token");
 }
 
 // =======================
-// AUTH HEADER
+// AUTH HEADERS
 // =======================
 export function getAuthHeaders() {
   return {
@@ -93,6 +97,13 @@ export function logoutUser() {
 }
 
 // =======================
-// API URL
+// CHECK LOGIN
+// =======================
+export function isAuthenticated() {
+  return !!localStorage.getItem("token");
+}
+
+// =======================
+// EXPORT BASE URL
 // =======================
 export { BASE_URL };
