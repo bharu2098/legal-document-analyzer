@@ -21,7 +21,7 @@ function Sidebar({
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://127.0.0.1:8000/documents/${document.id}`,
+       `https://legal-document-analyzer-production-bf96.up.railway.app/documents/${document.id}`,
         {
           method: "DELETE",
           headers: {

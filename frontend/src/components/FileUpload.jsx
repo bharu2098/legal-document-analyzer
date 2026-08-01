@@ -44,7 +44,7 @@ function FileUpload({
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/documents/upload",
+        "https://legal-document-analyzer-production-bf96.up.railway.app/documents/upload",
         {
           method: "POST",
           headers: {
@@ -64,7 +64,7 @@ function FileUpload({
 
       // Refresh document list
       const docsResponse = await fetch(
-        "http://127.0.0.1:8000/documents/",
+        "https://legal-document-analyzer-production-bf96.up.railway.app/documents/",
         {
           headers: {
             Authorization: `Bearer ${token}`,
