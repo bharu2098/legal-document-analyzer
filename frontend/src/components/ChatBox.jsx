@@ -122,7 +122,8 @@ useEffect(() => {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-100">
+    <div className="flex-1 min-w-0 flex flex-col bg-gray-100 overflow-hidden">
+
 
       {/* Header */}
       <div className="bg-white border-b p-5">
@@ -150,7 +151,7 @@ useEffect(() => {
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto p-6">
+      <div className="flex-1 overflow-x-hidden overflow-y-auto p-6">
 
         {/* Welcome Screen */}
         {!selectedDocument && messages.length === 0 && (
@@ -229,7 +230,7 @@ useEffect(() => {
                 }`}
               >
                 <div
-                  className={`max-w-[75%] rounded-xl shadow px-5 py-4 ${
+  className={`max-w-[75%] min-w-0 overflow-hidden rounded-xl shadow px-5 py-4 ${
                     msg.sender === "user"
                       ? "bg-blue-600 text-white"
                       : "bg-white border"
@@ -242,7 +243,9 @@ useEffect(() => {
 </p>
 
                   <div className="flex justify-between items-start gap-3">
-  <p className="whitespace-pre-wrap flex-1">
+ <p className="flex-1 whitespace-pre-wrap break-words overflow-x-auto">
+
+
     {msg.text}
   </p>
 
@@ -328,7 +331,7 @@ useEffect(() => {
     : "⚖️ AI Legal Analyzer"}
 </p>
 
-                  <p className="whitespace-pre-wrap">
+                 <p className="whitespace-pre-wrap break-words">
   {msg.text}
 </p>
 

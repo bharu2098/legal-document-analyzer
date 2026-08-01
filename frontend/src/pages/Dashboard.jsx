@@ -70,7 +70,8 @@ function Dashboard() {
 
       <Navbar />
 
-      <div className="flex h-[calc(100vh-64px)]">
+      <div className="flex h-[calc(100vh-64px)] overflow-hidden">
+
 
         <Sidebar
           documents={documents}
@@ -80,7 +81,7 @@ function Dashboard() {
           clearChat={clearChat}
         />
 
-        <div className="flex-1">
+        <div className="flex-1 min-w-0 overflow-hidden">
 
           {loading ? (
 

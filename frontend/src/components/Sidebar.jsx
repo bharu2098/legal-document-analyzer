@@ -50,7 +50,7 @@ function Sidebar({
   };
 
   return (
-    <div className="w-80 bg-white border-r flex flex-col">
+    <div className="w-80 min-w-[320px] max-w-[320px] flex-shrink-0 bg-white border-r flex flex-col shadow-sm">
 
       {/* Header */}
       <div className="p-5 border-b">
