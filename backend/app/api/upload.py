@@ -73,15 +73,15 @@ async def upload_document(
 
         validation = is_legal_document(extracted_text)
 
-        print("\n" + "=" * 80)
-        print("LEGAL DOCUMENT VALIDATION")
-        print("=" * 80)
-        print(f"Filename       : {file.filename}")
-        print(f"Detected Type  : {validation['document_type']}")
-        print(f"Confidence     : {validation['confidence']}%")
-        print(f"Legal Document : {validation['is_legal']}")
-        print(f"Reason         : {validation['reason']}")
-        print("=" * 80 + "\n")
+        print("\n" + "=" * 80, flush=True)
+        print("LEGAL DOCUMENT VALIDATION", flush=True)
+        print("=" * 80, flush=True )
+        print(f"Filename       : {file.filename}", flush=True)
+        print(f"Detected Type  : {validation['document_type']}", flush=True)
+        print(f"Confidence     : {validation['confidence']}%", flush=True)
+        print(f"Legal Document : {validation['is_legal']}", flush=True)
+        print(f"Reason         : {validation['reason']}", flush=True)
+        print("=" * 80 + "\n", flush=True)
 
         if not validation["is_legal"]:
 
