@@ -1,5 +1,9 @@
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL =
+  import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
+// =======================
+// REGISTER
+// =======================
 export async function registerUser(userData) {
   const response = await fetch(`${BASE_URL}/auth/register`, {
     method: "POST",
@@ -26,13 +30,23 @@ export async function registerUser(userData) {
   return data;
 }
 
+// =======================
+// LOGIN
+// =======================
 export async function loginUser(userData) {
+  const formData = new URLSearchParams();
+
+  // Swagger OAuth2 expects username/password
+  // We send email as username
+  formData.append("username", userData.email);
+  formData.append("password", userData.password);
+
   const response = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: JSON.stringify(userData),
+    body: formData,
   });
 
   const data = await response.json();
@@ -49,5 +63,22 @@ export async function loginUser(userData) {
     throw new Error(message);
   }
 
+  // Save JWT token
+  localStorage.setItem("token", data.access_token);
+
   return data;
+}
+
+// =======================
+// GET TOKEN
+// =======================
+export function getToken() {
+  return localStorage.getItem("token");
+}
+
+// =======================
+// LOGOUT
+// =======================
+export function logoutUser() {
+  localStorage.removeItem("token");
 }
