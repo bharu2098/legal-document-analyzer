@@ -8,11 +8,20 @@ class Document(Base):
     __tablename__ = "documents"
 
     id = Column(Integer, primary_key=True, index=True)
+
     filename = Column(String(255), nullable=False)
+
     file_type = Column(String(20), nullable=False)
+
     content = Column(Text, nullable=False)
 
-    owner_id = Column(Integer, ForeignKey("users.id"))
+    # AI-generated legal analysis
+    legal_summary = Column(Text, nullable=True)
+
+    owner_id = Column(
+        Integer,
+        ForeignKey("users.id"),
+    )
 
     owner = relationship(
         "User",

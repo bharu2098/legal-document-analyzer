@@ -12,6 +12,8 @@ from app.core.dependencies import get_current_user
 from app.services.pdf_service import extract_pdf_text
 from app.services.docx_service import extract_docx_text
 from app.services.chroma_service import vector_store
+from app.services.legal_validator import is_legal_document
+from app.services.legal_insights import generate_legal_insights
 from app.utils.helpers import split_text
 
 router = APIRouter(
@@ -44,56 +46,114 @@ async def upload_document(
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    # Extract text
-    if extension == ".pdf":
-        extracted_text = extract_pdf_text(str(file_path))
-    else:
-        extracted_text = extract_docx_text(str(file_path))
+    try:
 
-    if not extracted_text.strip():
-        raise HTTPException(
-            status_code=400,
-            detail="No text found in the uploaded document.",
+        # ==========================
+        # Extract Text
+        # ==========================
+        if extension == ".pdf":
+            extracted_text = extract_pdf_text(str(file_path))
+        else:
+            extracted_text = extract_docx_text(str(file_path))
+
+        if not extracted_text.strip():
+            file_path.unlink(missing_ok=True)
+
+            raise HTTPException(
+                status_code=400,
+                detail="No text found in the uploaded document.",
+            )
+
+        # ==========================
+        # Validate Legal Document
+        # ==========================
+        if not is_legal_document(extracted_text):
+
+            file_path.unlink(missing_ok=True)
+
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    "Only legal documents are allowed.\n\n"
+                    "Supported legal documents include:\n"
+                    "- Employment Contract\n"
+                    "- Rental Agreement\n"
+                    "- Lease Agreement\n"
+                    "- NDA\n"
+                    "- Service Agreement\n"
+                    "- Partnership Agreement\n"
+                    "- Purchase Agreement\n"
+                    "- Insurance Policy\n"
+                    "- Court Order\n"
+                    "- Legal Notice\n"
+                    "- Affidavit\n"
+                    "- Government Legal Documents"
+                ),
+            )
+
+        # ==========================
+        # Generate AI Legal Insights
+        # ==========================
+        legal_summary = generate_legal_insights(extracted_text)
+
+        # ==========================
+        # Save Document
+        # ==========================
+        document = Document(
+            filename=file.filename,
+            file_type=extension,
+            content=extracted_text,
+            legal_summary=legal_summary,
+            owner_id=current_user.id,
         )
 
-    # Save document
-    document = Document(
-        filename=file.filename,
-        file_type=extension,
-        content=extracted_text,
-        owner_id=current_user.id,
-    )
+        db.add(document)
+        db.commit()
+        db.refresh(document)
 
-    db.add(document)
-    db.commit()
-    db.refresh(document)
+        # ==========================
+        # Split Document
+        # ==========================
+        chunks = split_text(extracted_text)
 
-    # Split text
-    chunks = split_text(extracted_text)
+        # ==========================
+        # Store in ChromaDB
+        # ==========================
+        vector_store.add_texts(
+            texts=chunks,
+            metadatas=[
+                {
+                    "document_id": document.id,
+                    "owner_id": current_user.id,
+                    "filename": document.filename,
+                    "file_type": extension,
+                }
+                for _ in chunks
+            ],
+        )
 
-    # Store in ChromaDB
-    vector_store.add_texts(
-        texts=chunks,
-        metadatas=[
-            {
-                "document_id": document.id,
-                "owner_id": current_user.id,
-                "filename": file.filename,
-                "file_type": extension,
-            }
-            for _ in chunks
-        ],
-    )
+        return {
+            "message": "Legal document uploaded successfully.",
+            "document_id": document.id,
+            "filename": document.filename,
+            "file_type": document.file_type,
+            "owner_id": current_user.id,
+            "characters_extracted": len(extracted_text),
+            "chunks_created": len(chunks),
+            "legal_summary": legal_summary,
+        }
 
-    return {
-        "message": "Document uploaded successfully",
-        "document_id": document.id,
-        "filename": document.filename,
-        "file_type": extension,
-        "owner_id": current_user.id,
-        "characters_extracted": len(extracted_text),
-        "chunks_created": len(chunks),
-    }
+    except HTTPException:
+        raise
+
+    except Exception as e:
+
+        file_path.unlink(missing_ok=True)
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"Upload failed: {str(e)}",
+        )
 
 
 @router.get("/")
@@ -124,13 +184,6 @@ def delete_document(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    """
-    Delete a document from:
-    - SQLite
-    - uploads folder
-    - ChromaDB
-    """
-
     document = (
         db.query(Document)
         .filter(
@@ -146,13 +199,11 @@ def delete_document(
             detail="Document not found.",
         )
 
-    # Delete uploaded file
     file_path = Path(UPLOAD_DIR) / document.filename
 
     if file_path.exists():
         file_path.unlink()
 
-    # Delete embeddings from ChromaDB
     try:
         collection = vector_store._collection
 
@@ -173,7 +224,6 @@ def delete_document(
     except Exception as e:
         print("Chroma delete error:", e)
 
-    # Delete database record
     db.delete(document)
     db.commit()
 
