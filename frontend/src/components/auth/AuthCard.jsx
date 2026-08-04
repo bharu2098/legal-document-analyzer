@@ -10,10 +10,10 @@ function AuthCard({
         max-w-[520px]
         rounded-[32px]
         border
-        border-white/10
-        bg-white/5
-        backdrop-blur-2xl
-        shadow-[0_40px_120px_rgba(0,0,0,0.5)]
+        border-white/15
+        bg-white/10
+        backdrop-blur-3xl
+        shadow-[0_35px_90px_rgba(0,0,0,0.45)]
         px-10
         py-10
       "
@@ -51,7 +51,7 @@ function AuthCard({
 
       {/* Form */}
 
-      <div className="space-y-7">
+      <div className="space-y-6">
         {children}
       </div>
     </div>
