@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import ChatBox from "../components/ChatBox";
+import ChatBox from "../components/ChatBoxClean";
 
 function Dashboard() {
   const [selectedDocument, setSelectedDocument] = useState(null);
