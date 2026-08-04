@@ -28,11 +28,11 @@ function Navbar() {
           <div>
 
             <h1 className="text-4xl font-bold tracking-tight text-white">
-              AI Legal Document Analyzer
+              AI Document Analyzer
             </h1>
 
             <p className="text-slate-400 text-lg mt-1">
-              Intelligent Legal Document Analysis using AI
+              Intelligent document analysis using AI
             </p>
 
           </div>

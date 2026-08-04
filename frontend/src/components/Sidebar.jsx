@@ -62,11 +62,11 @@ function Sidebar({
           <div>
 
             <h2 className="text-3xl font-bold text-white">
-              Legal Documents
+              Documents
             </h2>
 
             <p className="text-slate-400 mt-1">
-              Upload and manage your legal documents
+              Upload and manage your documents
             </p>
 
           </div>
@@ -114,7 +114,7 @@ function Sidebar({
       <div className="flex-1 overflow-y-auto px-6 py-5 space-y-4">
 
         <p className="text-slate-400 uppercase tracking-[0.35em] text-xs font-semibold mb-3">
-          {documents.length} Legal Document{documents.length !== 1 ? "s" : ""}
+          {documents.length} Document{documents.length !== 1 ? "s" : ""}
         </p>
 
         {documents.length === 0 ? (
@@ -130,7 +130,7 @@ function Sidebar({
             </h3>
 
             <p className="text-slate-500 mt-2">
-              Upload your first legal document.
+              Upload your first document.
             </p>
 
           </div>
@@ -176,7 +176,7 @@ function Sidebar({
                     </h3>
 
                     <p className="text-slate-400 text-sm mt-2">
-                      Legal Document #{doc.id}
+                      Document #{doc.id}
                     </p>
 
                   </div>

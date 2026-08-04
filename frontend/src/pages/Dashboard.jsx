@@ -124,25 +124,11 @@ function Dashboard() {
       </div>
 
       <h1 className="text-5xl font-extrabold text-white mb-6">
-        AI Legal Document Analyzer
+        AI Document Analyzer
       </h1>
 
       <p className="text-xl text-slate-400 leading-9 max-w-4xl mx-auto">
-        Upload legal PDF or DOCX documents and instantly summarize
-        contracts, explain clauses, identify obligations,
-        detect risks, analyze agreements and ask legal
-        questions using AI.
-      </p>
-
-    </div>
-
-    {/* Feature Cards */}
-
-    <div className="grid lg:grid-cols-3 gap-7 mb-12">
-
-      <div
-        className="
-          rounded-3xl
+        Upload PDF or DOCX documents and instantly summarize files, explain clauses, identify obligations, detect risks, analyze agreements, and ask questions using AI.
           bg-[#161B22]
           border
           border-slate-700
@@ -159,14 +145,11 @@ function Dashboard() {
         </div>
 
         <h3 className="text-white text-2xl font-bold mb-3">
-          Legal Documents
+          Documents
         </h3>
 
         <p className="text-slate-400 leading-7">
-          Securely upload contracts,
-          agreements, notices,
-          policies and court documents
-          for AI analysis.
+          Securely upload contracts, agreements, notices, policies and other documents for AI analysis.
         </p>
 
       </div>
@@ -194,10 +177,7 @@ function Dashboard() {
         </h3>
 
         <p className="text-slate-400 leading-7">
-          Automatically summarize legal
-          documents, explain clauses and
-          answer complex legal questions
-          using AI.
+          Automatically summarize documents, explain clauses and answer complex questions using AI.
         </p>
 
       </div>
@@ -224,10 +204,7 @@ function Dashboard() {
         </h3>
 
         <p className="text-slate-400 leading-7">
-          Your uploaded legal documents
-          remain protected while being
-          processed inside your secure
-          AI workspace.
+          Your uploaded documents remain protected while being processed in a secure workspace.
         </p>
 
       </div>

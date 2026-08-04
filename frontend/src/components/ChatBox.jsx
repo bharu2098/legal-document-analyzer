@@ -171,26 +171,12 @@ function ChatBox({
         </h2>
 
         <p className="text-xs text-slate-500">
-          AI Legal Document Analyzer
-        </p>
-
-      </div>
-
-    ) : (
-
-      <div className="flex flex-col">
-
-        <h2 className="text-lg font-semibold text-white">
-          ⚖️ AI Legal Document Analyzer
+          Document analyzer workspace
+          Document Analyzer
         </h2>
 
         <p className="text-xs text-slate-500">
-          Upload a legal PDF or DOCX document to begin analysis
-        </p>
-
-      </div>
-
-    )}
+          Upload a PDF or DOCX document to begin analysis
 
   </div>
 
@@ -209,15 +195,11 @@ function ChatBox({
           <div className="text-center max-w-4xl">
 
             <h1 className="text-5xl font-bold text-white mb-6">
-              ⚖️ AI Legal Document Analyzer
+              Document Analyzer
             </h1>
 
             <p className="text-xl text-slate-400 leading-9">
-              Upload contracts, agreements, NDAs, lease agreements,
-              insurance policies, legal notices and other legal
-              documents. Ask AI to summarize, identify obligations,
-              penalties, risks, important clauses and answer your
-              legal questions instantly.
+              Upload contracts, agreements, reports, policies, notices and other documents. Ask AI to summarize content, identify key points, detect risks, and answer questions instantly.
             </p>
 
           </div>

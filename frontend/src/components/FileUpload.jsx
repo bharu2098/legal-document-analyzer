@@ -304,13 +304,13 @@ function FileUpload({
 
           {uploading
             ? "Uploading..."
-            : "Upload Legal Document"}
+            : "Upload Document"}
 
         </h3>
 
         <p className="text-sm text-slate-400 mt-3">
 
-          Drag & Drop your legal document here
+          Drag & drop your document here
 
         </p>
 
@@ -364,7 +364,7 @@ function FileUpload({
           </span>
 
           <span className="px-3 py-1 rounded-full bg-green-900/20 border border-green-600 text-green-400 text-xs">
-            AI Verified
+            Verified
           </span>
 
         </div>
