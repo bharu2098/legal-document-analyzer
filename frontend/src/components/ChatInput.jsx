@@ -24,27 +24,27 @@ function ChatInput({
   };
 
   return (
-    <div className="flex-shrink-0 bg-[#0B1120] border-t border-slate-800 px-8 py-6">
+    <div className="flex-shrink-0 bg-[#0B111D] border-t border-slate-800 px-8 py-6">
 
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
 
         <div
           className="
             flex
             items-center
             gap-3
-            rounded-3xl
+            rounded-[32px]
             border
             border-slate-700
-            bg-[#161B22]
+            bg-[#111827]
             px-4
-            py-3
+            py-4
             shadow-xl
             transition-all
             duration-300
-            focus-within:border-blue-500
+            focus-within:border-violet-500
             focus-within:ring-2
-            focus-within:ring-blue-500/20
+            focus-within:ring-violet-500/20
           "
         >
 
@@ -96,15 +96,17 @@ function ChatInput({
             disabled={disabled}
             title="Send Message"
             className="
-              w-12
-              h-12
-              rounded-2xl
-              bg-blue-600
-              hover:bg-blue-500
+              w-14
+              h-14
+              rounded-[24px]
+              bg-gradient-to-r
+              from-violet-500
+              via-blue-500
+              to-indigo-600
               disabled:bg-slate-700
               disabled:cursor-not-allowed
               text-white
-              text-xl
+              text-2xl
               flex
               items-center
               justify-center

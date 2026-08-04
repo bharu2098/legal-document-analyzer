@@ -156,7 +156,7 @@ function ChatBox({
   // =====================================================
 
   return (
-    <div className="flex-1 flex flex-col bg-[#0B1120] overflow-hidden">
+    <div className="flex-1 flex flex-col bg-[#0B111D] overflow-hidden">
 
   {/* ================= HEADER ================= */}
 
@@ -196,15 +196,15 @@ function ChatBox({
 
   {/* ================= CHAT AREA ================= */}
 
-  <div className="flex-1 overflow-y-auto">
+  <div className="flex-1 overflow-y-auto bg-[#0B111D]">
 
-    <div className="max-w-5xl mx-auto px-10 py-12">
+    <div className="max-w-6xl mx-auto px-8 py-10">
 
       {/* ================= WELCOME ================= */}
 
       {!selectedDocument && messages.length === 0 && (
 
-        <div className="min-h-[75vh] flex items-center justify-center">
+<div className="min-h-[72vh] flex items-center justify-center">
 
           <div className="text-center max-w-4xl">
 
@@ -230,7 +230,7 @@ function ChatBox({
 
       {selectedDocument && messages.length === 0 && !loading && (
 
-        <div className="min-h-[75vh] flex items-center justify-center">
+<div className="min-h-[72vh] flex items-center justify-center">
 
           <div className="max-w-3xl w-full">
 
@@ -316,10 +316,10 @@ function ChatBox({
               >
 
                 <div
-                  className={`rounded-3xl px-7 py-6 shadow-xl transition-all duration-300 ${
+                  className={`rounded-[28px] px-7 py-6 shadow-xl transition-all duration-300 ${
                     msg.sender === "user"
                       ? "max-w-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white"
-                      : "w-full bg-[#161B22] border border-slate-800 text-slate-100"
+                      : "w-full bg-[#111827] border border-slate-800 text-slate-100"
                   }`}
                 >
 
@@ -498,9 +498,9 @@ function ChatBox({
 
   {/* ================= INPUT ================= */}
 
-  <div className="sticky bottom-0 bg-gradient-to-t from-[#0B1120] via-[#0B1120] to-transparent pt-6">
+  <div className="sticky bottom-0 bg-gradient-to-t from-[#0B111D] via-[#0B111D] to-transparent pt-6">
 
-    <div className="max-w-5xl mx-auto px-10 pb-8">
+    <div className="max-w-6xl mx-auto px-8 pb-8">
 
       <ChatInput
         onSend={sendQuestion}

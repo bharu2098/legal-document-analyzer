@@ -48,10 +48,10 @@ function Sidebar({
   };
 
   return (
-    <aside className="w-[340px] bg-gradient-to-b from-[#0B1120] via-[#0F172A] to-[#111827] border-r border-slate-800 flex flex-col">
+    <aside className="w-[360px] bg-[#0B1120] border-r border-slate-800 flex flex-col">
 
       {/* Header */}
-      <div className="px-7 py-8 border-b border-slate-800">
+      <div className="px-7 py-7 border-b border-slate-800">
 
         <div className="flex items-center gap-4">
 
@@ -113,9 +113,8 @@ function Sidebar({
 
       <div className="flex-1 overflow-y-auto px-6 py-5">
 
-        <p className="text-blue-400 font-semibold mb-5">
-          {documents.length} Legal Document
-          {documents.length !== 1 ? "s" : ""}
+        <p className="text-blue-300 uppercase tracking-[0.25em] text-xs font-semibold mb-5">
+          {documents.length} Legal Document{documents.length !== 1 ? "s" : ""}
         </p>
 
         {documents.length === 0 ? (
@@ -147,15 +146,15 @@ function Sidebar({
                 onClick={() => setSelectedDocument(doc)}
                 className={`
                   cursor-pointer
-                  rounded-3xl
+                  rounded-[28px]
                   border
                   p-5
                   transition-all
                   duration-300
                   ${
                     selectedDocument?.id === doc.id
-                      ? "border-indigo-500 bg-gradient-to-br from-indigo-900/30 to-slate-900 shadow-xl"
-                      : "border-slate-700 bg-slate-900/60 hover:border-indigo-400"
+                      ? "border-indigo-400 bg-gradient-to-br from-indigo-900/50 to-slate-900 shadow-[0_20px_50px_rgba(79,70,229,0.25)]"
+                      : "border-slate-700 bg-[#111827]/80 hover:border-indigo-400"
                   }
                 `}
               >

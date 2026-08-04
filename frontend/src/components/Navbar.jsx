@@ -15,14 +15,14 @@ function Navbar() {
   };
 
   return (
-    <header className="h-24 bg-[#0B1120] border-b border-slate-800 shadow-xl">
+    <header className="h-20 bg-[#0B1120] border-b border-slate-800 shadow-xl">
       <div className="h-full px-8 flex items-center justify-between">
 
         {/* Left */}
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-4">
 
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 flex items-center justify-center shadow-xl">
-            <span className="text-4xl">⚖️</span>
+          <div className="w-14 h-14 rounded-[24px] bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 flex items-center justify-center shadow-xl shadow-amber-500/30">
+            <span className="text-3xl">⚖️</span>
           </div>
 
           <div>
@@ -60,27 +60,26 @@ function Navbar() {
               flex
               items-center
               gap-3
-              px-8
-              py-4
-              rounded-2xl
+              px-6
+              py-3
+              rounded-3xl
               border
-              border-red-500/40
+              border-red-500/30
               bg-gradient-to-r
-              from-red-900/40
-              via-red-700/40
-              to-red-600/40
-              hover:from-red-700
-              hover:to-red-600
+              from-red-700/80
+              to-red-600/80
+              hover:from-red-600
+              hover:to-red-500
               text-white
               font-semibold
-              text-lg
+              text-base
               transition-all
               duration-300
               hover:scale-105
-              shadow-xl
+              shadow-lg
             "
           >
-            <span className="text-xl">🚪</span>
+            <span className="text-lg">🚪</span>
             Sign Out
           </button>
 

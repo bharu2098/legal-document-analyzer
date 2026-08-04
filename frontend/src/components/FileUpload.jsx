@@ -277,7 +277,7 @@ function FileUpload({
         onDragLeave={handleDragLeave}
         className={`
           cursor-pointer
-          rounded-3xl
+          rounded-[32px]
           border-2
           border-dashed
           px-6
@@ -285,11 +285,11 @@ function FileUpload({
           text-center
           transition-all
           duration-300
-          shadow-lg
+          shadow-2xl
           ${
             dragActive
               ? "border-blue-500 bg-blue-500/10 scale-[1.02]"
-              : "border-slate-700 bg-[#161B22] hover:border-blue-500 hover:bg-[#1B2430]"
+              : "border-slate-700 bg-[#111827] hover:border-blue-500 hover:bg-[#1B2430]"
           }
         `}
       >
@@ -327,11 +327,15 @@ function FileUpload({
             mt-8
             px-8
             py-3
-            rounded-xl
-            bg-blue-600
-            hover:bg-blue-500
+            rounded-[24px]
+            bg-gradient-to-r
+            from-violet-500
+            via-blue-500
+            to-indigo-600
+            hover:from-violet-400
+            hover:to-indigo-500
             text-white
-            font-medium
+            font-semibold
             transition-all
             duration-300
             disabled:opacity-60
