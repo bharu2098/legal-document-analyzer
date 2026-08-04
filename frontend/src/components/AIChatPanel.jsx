@@ -65,53 +65,61 @@ export default function AIChatPanel({ selectedDocument, clearChatTrigger }) {
   };
 
   return (
-    <section className="flex-1 flex flex-col rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-900/5 overflow-hidden">
-      <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-6 py-5">
-        <div>
-          <p className="text-sm text-slate-500">Document Chat</p>
-          <h2 className="text-xl font-semibold text-slate-900">
-            {selectedDocument ? selectedDocument.filename : "Select a document to start"}
-          </h2>
+    <section className="flex-1 flex flex-col overflow-hidden bg-slate-100">
+      <div className="border-b border-slate-200 bg-white px-6 py-5">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.35em] text-slate-500">Document Chat</p>
+            <h2 className="text-xl font-semibold text-slate-900 truncate">
+              {selectedDocument ? selectedDocument.filename : "Select a document to start"}
+            </h2>
+          </div>
+          {selectedDocument && (
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs uppercase tracking-[0.3em] text-slate-500">
+              Selected
+            </span>
+          )}
         </div>
-        {selectedDocument && (
-          <div className="rounded-full bg-slate-100 px-3 py-2 text-sm text-slate-500">
-            Document selected
-          </div>
-        )}
       </div>
 
-      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4 bg-slate-50">
-        {!selectedDocument ? (
-          <div className="mx-auto flex h-full max-w-2xl flex-col items-center justify-center rounded-3xl border border-dashed border-slate-200 bg-white p-10 text-center">
-            <p className="text-sm text-slate-500">Upload and select a document to start the chat.</p>
-          </div>
-        ) : messages.length === 0 && !loading ? (
-          <div className="mx-auto flex h-full max-w-2xl flex-col items-center justify-center rounded-3xl border border-dashed border-slate-200 bg-white p-10 text-center">
-            <h3 className="text-lg font-semibold text-slate-900 mb-3">Ready to chat</h3>
-            <p className="text-sm text-slate-500">Ask questions about the selected document.</p>
-          </div>
-        ) : (
-          messages.map((msg, index) => (
-            <div
-              key={index}
-              className={`max-w-[70%] rounded-3xl px-5 py-4 shadow-sm ${
-                msg.sender === "user"
-                  ? "self-end bg-blue-100 text-slate-900"
-                  : "self-start bg-white text-slate-900 border border-slate-200"
-              }`}
-            >
-              <p className="text-sm">{msg.text}</p>
-              <span className="mt-3 block text-xs text-slate-400">{msg.time}</span>
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
+          {!selectedDocument ? (
+            <div className="mx-auto flex h-full max-w-xl flex-col items-center justify-center rounded-3xl border border-dashed border-slate-200 bg-white p-10 text-center">
+              <p className="text-sm text-slate-500">Upload and select a document to start the chat.</p>
             </div>
-          ))
+          ) : messages.length === 0 && !loading ? (
+            <div className="mx-auto flex h-full max-w-xl flex-col items-center justify-center rounded-3xl border border-dashed border-slate-200 bg-white p-10 text-center">
+              <h3 className="text-lg font-semibold text-slate-900 mb-3">Ready to chat</h3>
+              <p className="text-sm text-slate-500">Ask questions about the selected document.</p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4">
+              {messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`max-w-[75%] rounded-3xl px-5 py-4 shadow-sm ${
+                    msg.sender === "user"
+                      ? "self-end bg-sky-600 text-white"
+                      : "self-start bg-white text-slate-900 border border-slate-200"
+                  }`}
+                >
+                  <p className="text-sm leading-6">{msg.text}</p>
+                  <span className="mt-3 block text-xs text-slate-400">{msg.time}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div ref={messagesEndRef} />
+        </div>
+
+        {selectedDocument && (
+          <div className="border-t border-slate-200 bg-white px-6 py-4">
+            <ChatInput onSend={sendQuestion} loading={loading} selectedDocument={selectedDocument} />
+          </div>
         )}
-
-        <div ref={messagesEndRef} />
       </div>
-
-      {selectedDocument && (
-        <ChatInput onSend={sendQuestion} loading={loading} selectedDocument={selectedDocument} />
-      )}
     </section>
   );
 }

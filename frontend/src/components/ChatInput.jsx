@@ -24,34 +24,30 @@ function ChatInput({
   };
 
   return (
-    <div className="flex-shrink-0 bg-white border-t border-slate-200 px-6 py-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3">
-          <input
-            type="text"
-            maxLength={500}
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            onKeyDown={handleKeyDown}
-            disabled={disabled}
-            placeholder={
-              selectedDocument
-                ? "Ask a question about this legal document..."
-                : "Upload and select a document to begin..."
-            }
-            className="flex-1 bg-transparent border-none outline-none text-slate-700 placeholder-slate-400 text-sm py-2 disabled:opacity-50 disabled:cursor-not-allowed"
-          />
+    <div className="flex items-center gap-3 rounded-3xl border border-slate-200 bg-slate-100 px-4 py-3 shadow-sm">
+      <input
+        type="text"
+        maxLength={500}
+        value={question}
+        onChange={(e) => setQuestion(e.target.value)}
+        onKeyDown={handleKeyDown}
+        disabled={disabled}
+        placeholder={
+          selectedDocument
+            ? "Ask about this document..."
+            : "Upload and select a document to begin..."
+        }
+        className="flex-1 bg-transparent border-none outline-none text-slate-900 placeholder-slate-400 text-sm py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+      />
 
-          <button
-            onClick={handleSend}
-            disabled={disabled}
-            title="Send"
-            className="h-10 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white transition-colors duration-200 hover:bg-blue-500 disabled:bg-slate-300 disabled:text-slate-500"
-          >
-            {loading ? "Sending" : "Send"}
-          </button>
-        </div>
-      </div>
+      <button
+        onClick={handleSend}
+        disabled={disabled}
+        title="Send"
+        className="min-w-[88px] rounded-2xl bg-sky-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-sky-500 disabled:bg-slate-300 disabled:text-slate-500"
+      >
+        {loading ? "Sending" : "Send"}
+      </button>
     </div>
   );
 }
