@@ -255,11 +255,8 @@ function FileUpload({
   // ============================================
 
   return (
-
-    <div className="space-y-5">
-
+    <div className="space-y-4">
       {/* Hidden Input */}
-
       <input
         ref={fileInputRef}
         type="file"
@@ -268,128 +265,26 @@ function FileUpload({
         onChange={handleFileChange}
       />
 
-      {/* Upload Area */}
-
-      <div
+      <button
+        type="button"
         onClick={handleClick}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        className={`
-          cursor-pointer
-          rounded-[32px]
-          border-2
-          border-dashed
-          px-6
-          py-10
-          text-center
-          transition-all
-          duration-300
-          shadow-2xl
-          ${
-            dragActive
-              ? "border-blue-500 bg-blue-500/10 scale-[1.02]"
-              : "border-slate-700 bg-[#111827] hover:border-blue-500 hover:bg-[#1B2430]"
-          }
-        `}
+        disabled={uploading}
+        className="w-full rounded-2xl bg-blue-600 px-5 py-4 text-sm font-semibold text-white transition-colors duration-200 hover:bg-blue-500 disabled:bg-slate-300 disabled:text-slate-500"
       >
+        {uploading ? "Uploading..." : "Upload Legal Document"}
+      </button>
 
-        <div className="text-6xl mb-5">
+      <p className="text-xs text-slate-500 leading-6">
+        Supports legal PDF and DOCX documents such as Employment Contracts, NDAs, Rental Agreements, Court Orders, Policies, Terms & Conditions, and other legal documents.
+      </p>
 
-          {uploading ? "⏳" : "📤"}
-
-        </div>
-
-        <h3 className="text-xl font-semibold text-white">
-
-          {uploading
-            ? "Uploading..."
-            : "Upload Document"}
-
-        </h3>
-
-        <p className="text-sm text-slate-400 mt-3">
-
-          Drag & drop your document here
-
-        </p>
-
-        <p className="text-xs text-slate-500 mt-1">
-
-          or click to browse
-
-        </p>
-
-        <button
-          type="button"
-          disabled={uploading}
-          className="
-            mt-8
-            px-8
-            py-3
-            rounded-[24px]
-            bg-gradient-to-r
-            from-violet-500
-            via-blue-500
-            to-indigo-600
-            hover:from-violet-400
-            hover:to-indigo-500
-            text-white
-            font-semibold
-            transition-all
-            duration-300
-            disabled:opacity-60
-            disabled:cursor-not-allowed
-          "
-        >
-
-          {uploading
-            ? "Uploading..."
-            : "Choose File"}
-
-        </button>
-
-        <div className="flex justify-center gap-2 mt-6 flex-wrap">
-
-          <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs">
-            PDF
-          </span>
-
-          <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs">
-            DOC
-          </span>
-
-          <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs">
-            DOCX
-          </span>
-
-          <span className="px-3 py-1 rounded-full bg-green-900/20 border border-green-600 text-green-400 text-xs">
-            Verified
-          </span>
-
-        </div>
-                {/* Footer */}
-
-        <div className="mt-6 border-t border-slate-700 pt-5">
-
-          <p className="text-xs text-slate-500">
-
-            PDF • DOC • DOCX
-
-          </p>
-
-          <p className="text-xs text-slate-600 mt-1">
-
-            Maximum file size: 20 MB
-
-          </p>
-
-        </div>
-
+      <div className="flex flex-wrap gap-2 text-xs text-slate-500">
+        <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-1">PDF</span>
+        <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-1">DOC</span>
+        <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-1">DOCX</span>
+        <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-1 text-emerald-600">Verified</span>
       </div>
-
     </div>
-
   );
 
 }

@@ -48,161 +48,80 @@ function Sidebar({
   };
 
   return (
-    <aside className="w-[360px] bg-[#0B1120] border-r border-slate-800 flex flex-col">
+    <aside className="w-[360px] bg-white border-r border-slate-200 flex flex-col px-6 py-6">
 
       {/* Header */}
-      <div className="px-7 py-7 border-b border-slate-800">
-
-        <div className="flex items-center gap-4">
-
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-lg">
-            <span className="text-3xl">⚖️</span>
-          </div>
-
-          <div>
-
-            <h2 className="text-3xl font-bold text-white">
-              Documents
-            </h2>
-
-            <p className="text-slate-400 mt-1">
-              Upload and manage your documents
-            </p>
-
-          </div>
-
+      <div className="flex items-center gap-4 mb-6">
+        <div className="w-14 h-14 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center text-3xl text-slate-700">
+          ⚖️
         </div>
 
+        <div>
+          <h2 className="text-3xl font-bold text-slate-900">Legal Documents</h2>
+          <p className="text-sm text-slate-500 mt-1">Upload and manage your legal documents</p>
+        </div>
       </div>
 
       {/* Upload Section */}
-
-      <div className="px-6 py-6 border-b border-slate-800">
-
+      <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 mb-5">
         <FileUpload
           fetchDocuments={fetchDocuments}
           setSelectedDocument={setSelectedDocument}
         />
-
-        <button
-          onClick={clearChat}
-          disabled={!selectedDocument}
-          className="
-            w-full
-            mt-5
-            py-4
-            rounded-2xl
-            border
-            border-red-500/40
-            bg-gradient-to-r
-            from-red-900/20
-            to-red-700/20
-            text-red-300
-            font-semibold
-            hover:bg-red-700
-            hover:text-white
-            transition-all
-          "
-        >
-          🗑 Clear Chat
-        </button>
-
       </div>
 
+      <button
+        onClick={clearChat}
+        disabled={!selectedDocument}
+        className="w-full rounded-2xl bg-red-600 px-5 py-4 text-white text-base font-semibold transition-colors duration-200 hover:bg-red-500 disabled:bg-slate-300 disabled:text-slate-500"
+      >
+        🗑 Clear Chat
+      </button>
+
       {/* Documents */}
-
-      <div className="flex-1 overflow-y-auto px-6 py-5 space-y-4">
-
-        <p className="text-slate-400 uppercase tracking-[0.35em] text-xs font-semibold mb-3">
-          {documents.length} Document{documents.length !== 1 ? "s" : ""}
+      <div className="mt-8">
+        <p className="text-slate-500 uppercase tracking-[0.25em] text-xs font-semibold mb-4">
+          {documents.length} Legal Document{documents.length !== 1 ? "s" : ""}
         </p>
 
         {documents.length === 0 ? (
-
-          <div className="text-center mt-16">
-
-            <div className="text-6xl mb-4">
-              📂
-            </div>
-
-            <h3 className="text-white text-xl font-bold">
-              No Documents
-            </h3>
-
-            <p className="text-slate-500 mt-2">
-              Upload your first document.
-            </p>
-
+          <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 text-center">
+            <div className="text-4xl mb-3 text-slate-500">📂</div>
+            <h3 className="text-lg font-semibold text-slate-900">No Documents</h3>
+            <p className="text-sm text-slate-500 mt-2">Upload your first legal document.</p>
           </div>
-
         ) : (
-
-          <div className="space-y-5">
-
+          <div className="space-y-4">
             {documents.map((doc) => (
-
               <div
                 key={doc.id}
                 onClick={() => setSelectedDocument(doc)}
-                className={`
-                  cursor-pointer
-                  rounded-[28px]
-                  border
-                  p-5
-                  transition-all
-                  duration-300
-                  ${
-                    selectedDocument?.id === doc.id
-                      ? "border-indigo-400 bg-gradient-to-br from-indigo-900/50 to-slate-900 shadow-[0_20px_50px_rgba(79,70,229,0.25)]"
-                      : "border-slate-700 bg-[#111827]/80 hover:border-indigo-400"
-                  }
-                `}
+                className={`flex items-center justify-between cursor-pointer rounded-3xl border p-4 transition duration-200 ${
+                  selectedDocument?.id === doc.id
+                    ? "border-blue-500 bg-blue-50"
+                    : "border-slate-200 bg-white hover:border-blue-300"
+                }`}
               >
-
-                <div className="flex items-start gap-4">
-
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-600/20 to-indigo-600/20 flex items-center justify-center">
-
-                    <span className="text-3xl">
-                      📄
-                    </span>
-
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center text-xl text-blue-600">
+                    📄
                   </div>
-
-                  <div className="flex-1 min-w-0">
-
-                    <h3 className="text-white font-bold break-words leading-6">
-                      {doc.filename}
-                    </h3>
-
-                    <p className="text-slate-400 text-sm mt-2">
-                      Document #{doc.id}
-                    </p>
-
+                  <div className="min-w-0">
+                    <h3 className="truncate text-sm font-semibold text-slate-900">{doc.filename}</h3>
+                    <p className="text-xs text-slate-500 mt-1">Legal Document #{doc.id}</p>
                   </div>
-
-                  <button
-                    onClick={(e) => handleDelete(e, doc)}
-                    className="
-                      text-slate-500
-                      hover:text-red-400
-                      transition
-                      text-lg
-                    "
-                  >
-                    🗑
-                  </button>
-
                 </div>
-
+                <button
+                  onClick={(e) => handleDelete(e, doc)}
+                  className="rounded-full p-2 text-slate-400 hover:text-red-500"
+                  title="Delete document"
+                >
+                  🗑
+                </button>
               </div>
-
             ))}
-
           </div>
-
         )}
-
       </div>
 
     </aside>
