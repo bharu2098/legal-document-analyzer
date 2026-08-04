@@ -173,10 +173,21 @@ function ChatBox({
         <p className="text-xs text-slate-500">
           Document analyzer workspace
           Document Analyzer
-        </h2>
+        </p>
 
         <p className="text-xs text-slate-500">
           Upload a PDF or DOCX document to begin analysis
+        </p>
+
+      </div>
+
+    ) : (
+
+      <div className="text-sm text-slate-500">
+        Select a document to start the chat.
+      </div>
+
+    )}
 
   </div>
 
