@@ -1,13 +1,16 @@
-function AuthInput({
-  label,
-  icon,
-  type = "text",
+import { useState } from "react";
+import { Lock, Eye, EyeOff } from "lucide-react";
+
+function PasswordInput({
+  label = "Password",
   name,
   value,
   onChange,
   placeholder,
   autoComplete,
 }) {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div className="mb-6">
 
@@ -25,11 +28,9 @@ function AuthInput({
         {label}
       </label>
 
-      {/* Input */}
-
       <div className="relative">
 
-        {/* Left Icon */}
+        {/* Lock Icon */}
 
         <div
           className="
@@ -40,11 +41,13 @@ function AuthInput({
             text-slate-500
           "
         >
-          {icon}
+          <Lock size={20} />
         </div>
 
+        {/* Input */}
+
         <input
-          type={type}
+          type={showPassword ? "text" : "password"}
           name={name}
           value={value}
           onChange={onChange}
@@ -58,7 +61,7 @@ function AuthInput({
             border-slate-700
             bg-[#111C2B]
             pl-14
-            pr-5
+            pr-14
             text-white
             placeholder:text-slate-500
             text-base
@@ -71,10 +74,32 @@ function AuthInput({
           "
         />
 
+        {/* Show / Hide */}
+
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="
+            absolute
+            right-5
+            top-1/2
+            -translate-y-1/2
+            text-slate-500
+            hover:text-white
+            transition-colors
+          "
+        >
+          {showPassword ? (
+            <EyeOff size={20} />
+          ) : (
+            <Eye size={20} />
+          )}
+        </button>
+
       </div>
 
     </div>
   );
 }
 
-export default AuthInput;
+export default PasswordInput;

@@ -1,23 +1,21 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { Mail } from "lucide-react";
 
 import { loginUser } from "../api/auth";
 
 import AuthLayout from "../components/auth/AuthLayout";
+import AuthHeader from "../components/auth/AuthHeader";
+import AuthCard from "../components/auth/AuthCard";
 import AuthInput from "../components/auth/AuthInput";
+import PasswordInput from "../components/auth/PasswordInput";
 import AuthButton from "../components/auth/AuthButton";
+import Divider from "../components/auth/Divider";
+import GoogleButton from "../components/auth/GoogleButton";
+import AuthFooter from "../components/auth/AuthFooter";
 
 function Login() {
-
   const navigate = useNavigate();
-
-  const [showPassword, setShowPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
@@ -29,16 +27,13 @@ function Login() {
   });
 
   const handleChange = (e) => {
-
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
-
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     if (!formData.email.trim()) {
@@ -54,177 +49,115 @@ function Login() {
     setLoading(true);
 
     try {
-
       const data = await loginUser(formData);
 
-      localStorage.setItem(
-        "token",
-        data.access_token
-      );
+      localStorage.setItem("token", data.access_token);
 
       navigate("/dashboard");
-
     } catch (error) {
-
       alert(error.message);
-
     } finally {
-
       setLoading(false);
-
     }
-
   };
 
   return (
+    <AuthLayout>
 
-    <AuthLayout
-      subtitle="Securely sign in to analyze your legal documents using AI."
-      heading="Welcome Back"
-      description="Sign in to continue"
-      footer="Secure AI-powered authentication"
-    >
+      <div className="w-full max-w-[620px]">
 
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-6"
-      >
+        <AuthHeader
+          subtitle="Securely sign in to analyze your legal documents using AI."
+        />
+
+        <AuthCard
+          title="Welcome Back"
+          subtitle="Sign in to continue"
+        >
+
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-6"
+          >
+
             <AuthInput
-          label="Email"
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Enter your email"
-          autoComplete="email"
-          icon={<Mail size={20} />}
-        />
-
-        <AuthInput
-          label="Password"
-          name="password"
-          type={showPassword ? "text" : "password"}
-          value={formData.password}
-          onChange={handleChange}
-          placeholder="Enter your password"
-          autoComplete="current-password"
-          icon={<Lock size={20} />}
-          rightIcon={
-            showPassword ? (
-              <EyeOff size={20} />
-            ) : (
-              <Eye size={20} />
-            )
-          }
-          onRightIconClick={() =>
-            setShowPassword(!showPassword)
-          }
-        />
-
-        {/* Remember Me */}
-
-        <div className="flex items-center justify-between">
-
-          <label className="flex items-center gap-3 text-slate-300">
-
-            <input
-              type="checkbox"
-              checked={remember}
-              onChange={() => setRemember(!remember)}
-              className="w-4 h-4 accent-blue-600"
+              label="Email Address"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+              autoComplete="email"
+              icon={<Mail size={20} />}
             />
 
-            Remember me
+            <PasswordInput
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter your password"
+              autoComplete="current-password"
+            />
 
-          </label>
+            <div className="flex items-center justify-between">
 
-          <button
-            type="button"
-            className="text-blue-500 hover:text-blue-400 transition"
-          >
-            Forgot Password?
-          </button>
+              <label className="flex items-center gap-3 text-slate-300 text-sm">
 
-        </div>
+                <input
+                  type="checkbox"
+                  checked={remember}
+                  onChange={() => setRemember(!remember)}
+                  className="w-4 h-4 accent-blue-600"
+                />
 
-        <AuthButton
-          loading={loading}
-          loadingText="Signing In..."
-        >
-          Sign In
-        </AuthButton>
-                {/* Divider */}
+                Remember me
 
-        <div className="flex items-center gap-5">
+              </label>
 
-          <div className="flex-1 h-px bg-slate-700"></div>
+              <button
+                type="button"
+                className="text-blue-400 hover:text-blue-300 text-sm"
+              >
+                Forgot Password?
+              </button>
 
-          <span className="text-slate-500 text-sm uppercase tracking-widest">
-            OR
-          </span>
+            </div>
 
-          <div className="flex-1 h-px bg-slate-700"></div>
-
-        </div>
-
-        {/* Google Button */}
-
-        <button
-          type="button"
-          className="
-            w-full
-            h-14
-            rounded-xl
-            border
-            border-slate-700
-            bg-[#1D2A3A]
-            hover:bg-[#243447]
-            transition-all
-            duration-300
-            flex
-            items-center
-            justify-center
-            gap-3
-            text-white
-            font-medium
-          "
-        >
-          <img
-            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-            alt="Google"
-            className="w-5 h-5"
-          />
-
-          Continue with Google
-        </button>
-
-        {/* Register */}
-
-        <div className="text-center pt-3">
-
-          <p className="text-slate-400">
-
-            Don't have an account?{" "}
-
-            <Link
-              to="/register"
-              className="
-                text-blue-500
-                hover:text-blue-400
-                font-semibold
-              "
+            <AuthButton
+              loading={loading}
+              loadingText="Signing In..."
             >
-              Create Account
-            </Link>
+              Sign In
+            </AuthButton>
 
-          </p>
+            <Divider />
 
-        </div>
+            <GoogleButton />
 
-      </form>
+            <div className="text-center">
+
+              <span className="text-slate-400">
+                Don't have an account?{" "}
+              </span>
+
+              <Link
+                to="/register"
+                className="text-blue-400 hover:text-blue-300 font-semibold"
+              >
+                Create Account
+              </Link>
+
+            </div>
+
+          </form>
+
+        </AuthCard>
+
+        <AuthFooter />
+
+      </div>
 
     </AuthLayout>
-
   );
 }
 

@@ -12,43 +12,37 @@ function AuthButton({
       disabled={loading}
       className="
         w-full
-        h-14
-        rounded-xl
+        h-[52px]
+        rounded-lg
         bg-gradient-to-r
-        from-blue-600
-        via-indigo-600
-        to-violet-600
-        hover:from-blue-500
-        hover:via-indigo-500
-        hover:to-violet-500
+        from-[#3B82F6]
+        to-[#2563EB]
+        hover:brightness-110
         text-white
+        text-[18px]
         font-semibold
-        text-lg
-        shadow-xl
-        shadow-blue-900/30
         transition-all
         duration-300
-        hover:scale-[1.02]
-        active:scale-95
-        disabled:opacity-60
-        disabled:cursor-not-allowed
-        disabled:hover:scale-100
         flex
         items-center
         justify-center
         gap-3
+        border
+        border-blue-500/30
+        disabled:opacity-60
+        disabled:cursor-not-allowed
       "
     >
       {loading ? (
         loadingText
       ) : (
         <>
-          {children}
-          <ArrowRight size={20} />
+          <ArrowRight size={18} strokeWidth={2.5} />
+          <span>{children}</span>
         </>
       )}
     </button>
   );
 }
 
-export default AuthButton; 
+export default AuthButton;

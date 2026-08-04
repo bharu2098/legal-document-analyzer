@@ -1,24 +1,21 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  User,
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { User, Mail } from "lucide-react";
 
 import { registerUser } from "../api/auth";
 
 import AuthLayout from "../components/auth/AuthLayout";
+import AuthHeader from "../components/auth/AuthHeader";
+import AuthCard from "../components/auth/AuthCard";
 import AuthInput from "../components/auth/AuthInput";
+import PasswordInput from "../components/auth/PasswordInput";
 import AuthButton from "../components/auth/AuthButton";
+import Divider from "../components/auth/Divider";
+import GoogleButton from "../components/auth/GoogleButton";
+import AuthFooter from "../components/auth/AuthFooter";
 
 function Register() {
-
   const navigate = useNavigate();
-
-  const [showPassword, setShowPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
@@ -29,16 +26,13 @@ function Register() {
   });
 
   const handleChange = (e) => {
-
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
-
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     if (!formData.username.trim()) {
@@ -59,158 +53,105 @@ function Register() {
     setLoading(true);
 
     try {
-
       await registerUser(formData);
 
       alert("✅ Registration Successful!");
 
       navigate("/login");
-
     } catch (error) {
-
       alert(error.message);
-
     } finally {
-
       setLoading(false);
-
     }
-
   };
 
   return (
+    <AuthLayout>
 
-    <AuthLayout
-      subtitle="Create your secure AI Legal account."
-      heading="Create Account"
-      description="Register to continue"
-      footer="Secure AI-powered authentication"
-    >
+      <div className="w-full max-w-[620px]">
 
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-6"
-      >
-                <AuthInput
-          label="Username"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          placeholder="Choose a username"
-          autoComplete="username"
-          icon={<User size={20} />}
+        <AuthHeader
+          subtitle="Create your secure AI Legal account."
         />
 
-        <AuthInput
-          label="Email"
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Enter your email"
-          autoComplete="email"
-          icon={<Mail size={20} />}
-        />
-
-        <AuthInput
-          label="Password"
-          name="password"
-          type={showPassword ? "text" : "password"}
-          value={formData.password}
-          onChange={handleChange}
-          placeholder="Create a secure password"
-          autoComplete="new-password"
-          icon={<Lock size={20} />}
-          rightIcon={
-            showPassword ? (
-              <EyeOff size={20} />
-            ) : (
-              <Eye size={20} />
-            )
-          }
-          onRightIconClick={() =>
-            setShowPassword(!showPassword)
-          }
-        />
-
-        <AuthButton
-          loading={loading}
-          loadingText="Creating Account..."
+        <AuthCard
+          title="Create Account"
+          subtitle="Register to continue"
         >
-          Create Account
-        </AuthButton>
 
-        {/* Divider */}
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-6"
+          >
 
-        <div className="flex items-center gap-5">
+            <AuthInput
+              label="Username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="Choose a username"
+              autoComplete="username"
+              icon={<User size={20} />}
+            />
 
-          <div className="flex-1 h-px bg-slate-700"></div>
+            <AuthInput
+              label="Email Address"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+              autoComplete="email"
+              icon={<Mail size={20} />}
+            />
 
-          <span className="text-slate-500 text-sm uppercase tracking-widest">
-            OR
-          </span>
+            <PasswordInput
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Create a secure password"
+              autoComplete="new-password"
+            />
 
-          <div className="flex-1 h-px bg-slate-700"></div>
-
-        </div>
-
-        {/* Google Button */}
-
-        <button
-          type="button"
-          className="
-            w-full
-            h-14
-            rounded-xl
-            border
-            border-slate-700
-            bg-[#1D2A3A]
-            hover:bg-[#243447]
-            transition-all
-            duration-300
-            flex
-            items-center
-            justify-center
-            gap-3
-            text-white
-            font-medium
-          "
-        >
-          <img
-            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-            alt="Google"
-            className="w-5 h-5"
-          />
-
-          Continue with Google
-        </button>
-                {/* Login */}
-
-        <div className="text-center pt-3">
-
-          <p className="text-slate-400">
-
-            Already have an account?{" "}
-
-            <Link
-              to="/login"
-              className="
-                text-blue-500
-                hover:text-blue-400
-                font-semibold
-              "
+            <AuthButton
+              loading={loading}
+              loadingText="Creating Account..."
             >
-              Sign In
-            </Link>
+              Create Account
+            </AuthButton>
 
-          </p>
+            <Divider />
 
-        </div>
+            <GoogleButton />
 
-      </form>
+            <div className="text-center">
+
+              <span className="text-slate-400">
+                Already have an account?{" "}
+              </span>
+
+              <Link
+                to="/login"
+                className="
+                  text-blue-400
+                  hover:text-blue-300
+                  font-semibold
+                "
+              >
+                Sign In
+              </Link>
+
+            </div>
+
+          </form>
+
+        </AuthCard>
+
+        <AuthFooter />
+
+      </div>
 
     </AuthLayout>
-
   );
 }
 
