@@ -1,176 +1,67 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
-/* ===========================================================
-   RESET
-=========================================================== */
-
-*,
-*::before,
-*::after{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-/* ===========================================================
-   ROOT
-=========================================================== */
-
-html{
-  scroll-behavior:smooth;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html,
 body,
-#root{
-  width:100%;
-  min-height:100%;
+#root {
+  width: 100%;
+  height: 100%;
+  font-family: Inter, sans-serif;
+  background: #020617;
 }
 
-/* ===========================================================
-   BODY
-=========================================================== */
+/* =========================================
+   Smooth Scrolling
+========================================= */
 
-body{
-
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-
-  background:#071321;
-
-  color:#ffffff;
-
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-
-  text-rendering:optimizeLegibility;
-
-  overflow-x:hidden;
-  overflow-y:auto;
-
+html {
+  scroll-behavior: smooth;
 }
 
-/* ===========================================================
-   SELECTION
-=========================================================== */
+/* =========================================
+   Custom Scrollbar
+========================================= */
 
-::selection{
-
-  background:#2563EB;
-  color:#ffffff;
-
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-/* ===========================================================
-   LINKS
-=========================================================== */
-
-a{
-
-  text-decoration:none;
-  color:inherit;
-
+::-webkit-scrollbar-track {
+  background: #0f172a;
 }
 
-/* ===========================================================
-   BUTTONS
-=========================================================== */
-
-button{
-
-  font:inherit;
-  cursor:pointer;
-
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 9999px;
 }
 
-button:disabled{
-
-  cursor:not-allowed;
-
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
 }
 
-/* ===========================================================
-   INPUTS
-=========================================================== */
-
-input,
-textarea{
-
-  font:inherit;
-
+::-webkit-scrollbar-corner {
+  background: #0f172a;
 }
 
-input:focus,
-textarea:focus{
+/* Firefox */
 
-  outline:none;
-
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #475569 #0f172a;
 }
 
-/* ===========================================================
-   IMAGES
-=========================================================== */
+/* =========================================
+   Selection
+========================================= */
 
-img{
-
-  display:block;
-  max-width:100%;
-
-}
-
-/* ===========================================================
-   SCROLLBAR
-=========================================================== */
-
-::-webkit-scrollbar{
-
-  width:10px;
-
-}
-
-::-webkit-scrollbar-track{
-
-  background:#071321;
-
-}
-
-::-webkit-scrollbar-thumb{
-
-  background:#334155;
-  border-radius:999px;
-
-}
-
-::-webkit-scrollbar-thumb:hover{
-
-  background:#475569;
-
-}
-
-*{
-
-  scrollbar-width:thin;
-  scrollbar-color:#334155 #071321;
-
-}
-
-/* ===========================================================
-   SMOOTH TRANSITIONS
-=========================================================== */
-
-button,
-input,
-textarea{
-
-  transition:
-    background-color .25s,
-    border-color .25s,
-    box-shadow .25s,
-    color .25s;
-
+::selection {
+  background: #2563eb;
+  color: white;
 }
