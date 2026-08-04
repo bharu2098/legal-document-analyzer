@@ -7,10 +7,10 @@ function GoogleButton({ label = "Continue with Google" }) {
         h-[60px]
         rounded-2xl
         border
-        border-slate-600
-        bg-[#142235]
-        hover:bg-[#18293E]
-        hover:border-slate-500
+        border-slate-700
+        bg-[#10213A]
+        hover:bg-[#182A43]
+        hover:border-slate-600
         transition-all
         duration-300
         flex
@@ -18,7 +18,7 @@ function GoogleButton({ label = "Continue with Google" }) {
         justify-center
         gap-3
         text-white
-        text-[16px]
+        text-[15px]
         font-medium
       "
     >

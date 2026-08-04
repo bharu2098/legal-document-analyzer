@@ -7,16 +7,15 @@ function AuthCard({
     <div
       className="
         w-full
-        max-w-[560px]
-        rounded-[28px]
+        max-w-[520px]
+        rounded-[32px]
         border
         border-white/10
-        bg-white/[0.045]
+        bg-white/5
         backdrop-blur-2xl
-        shadow-[0_30px_80px_rgba(0,0,0,0.45)]
-        px-12
-        pt-12
-        pb-10
+        shadow-[0_40px_120px_rgba(0,0,0,0.5)]
+        px-10
+        py-10
       "
     >
       {/* Heading */}
@@ -38,11 +37,13 @@ function AuthCard({
       <p
         className="
           mt-4
-          mb-12
+          mb-10
           text-center
-          text-[20px]
+          text-[18px]
           text-slate-400
           font-normal
+          max-w-[430px]
+          mx-auto
         "
       >
         {subtitle}

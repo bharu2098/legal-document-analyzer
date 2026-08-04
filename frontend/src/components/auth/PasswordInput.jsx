@@ -55,11 +55,11 @@ function PasswordInput({
           autoComplete={autoComplete}
           className="
             w-full
-            h-[60px]
-            rounded-2xl
+            h-[54px]
+            rounded-[22px]
             border
-            border-slate-600
-            bg-[#142235]
+            border-slate-700
+            bg-[#10213A]
             pl-14
             pr-14
             text-[16px]
@@ -69,7 +69,7 @@ function PasswordInput({
             transition-all
             duration-300
 
-            focus:border-blue-500
+            focus:border-blue-400
             focus:ring-2
             focus:ring-blue-500/20
 
