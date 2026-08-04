@@ -1,4 +1,4 @@
-function GoogleButton() {
+function GoogleButton({ label = "Continue with Google" }) {
   return (
     <button
       type="button"

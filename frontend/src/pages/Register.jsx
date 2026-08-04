@@ -23,7 +23,10 @@ function Register() {
     username: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
+
+  const [acceptedTerms, setAcceptedTerms] = useState(true);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -50,6 +53,21 @@ function Register() {
       return;
     }
 
+    if (!formData.confirmPassword.trim()) {
+      alert("Please confirm your password.");
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    if (!acceptedTerms) {
+      alert("Please agree to the Terms of Service and Privacy Policy.");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -71,13 +89,13 @@ function Register() {
 
         <div className="mb-14">
           <AuthHeader
-            subtitle="Create your secure AI Legal account and start analyzing documents."
+            subtitle="Create your account to get started."
           />
         </div>
 
         <AuthCard
           title="Create Account"
-          subtitle="Register to continue"
+          subtitle="Join us to analyze your legal documents."
         >
           <form
             onSubmit={handleSubmit}
@@ -109,9 +127,31 @@ function Register() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Create a secure password"
+              placeholder="Create a password"
               autoComplete="new-password"
             />
+
+            <PasswordInput
+              label="Confirm Password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirm your password"
+              autoComplete="new-password"
+            />
+
+            <label className="flex items-start gap-3 text-[15px] text-slate-300 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={acceptedTerms}
+                onChange={() => setAcceptedTerms(!acceptedTerms)}
+                className="mt-1 h-4 w-4 accent-blue-600"
+              />
+
+              <span className="text-[15px] text-slate-300 leading-6">
+                I agree to the <span className="text-blue-400">Terms of Service</span> and <span className="text-blue-400">Privacy Policy</span>
+              </span>
+            </label>
 
             <AuthButton
               loading={loading}
@@ -122,7 +162,7 @@ function Register() {
 
             <Divider />
 
-            <GoogleButton />
+            <GoogleButton label="Sign up with Google" />
 
             <div className="pt-3 text-center">
 

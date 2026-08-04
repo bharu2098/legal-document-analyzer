@@ -73,7 +73,7 @@ function Login() {
 
         <AuthCard
           title="Welcome Back"
-          subtitle="Sign in to continue to your secure workspace"
+          subtitle="Sign in to continue"
         >
           <form
             onSubmit={handleSubmit}
@@ -132,12 +132,12 @@ function Login() {
               loading={loading}
               loadingText="Signing In..."
             >
-              Sign In
+              Sign In Securely
             </AuthButton>
 
             <Divider />
 
-            <GoogleButton />
+            <GoogleButton label="Continue with Google" />
 
             <div className="pt-3 text-center">
 
@@ -154,7 +154,7 @@ function Login() {
                   transition-colors
                 "
               >
-                Create Account
+                Register
               </Link>
 
             </div>

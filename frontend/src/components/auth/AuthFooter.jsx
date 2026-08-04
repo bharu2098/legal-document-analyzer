@@ -9,7 +9,7 @@ function AuthFooter() {
           flex
           items-center
           gap-2
-          text-slate-500
+          text-slate-400
           text-sm
           font-medium
         "
@@ -20,7 +20,7 @@ function AuthFooter() {
         />
 
         <span>
-          Your data is protected with enterprise-grade security
+          Your data is secure and encrypted
         </span>
 
       </div>
