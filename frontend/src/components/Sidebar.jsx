@@ -48,72 +48,52 @@ function Sidebar({
   };
 
   return (
-    <aside className="w-[360px] bg-white border-r border-slate-200 flex flex-col px-6 py-6">
+    <aside className="w-[300px] bg-white border-r border-slate-200 flex flex-col px-4 py-4">
 
-      {/* Header */}
-      <div className="flex items-center gap-4 mb-6">
-        <div className="w-14 h-14 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center text-3xl text-slate-700">
-          ⚖️
-        </div>
-
-        <div>
-          <h2 className="text-3xl font-bold text-slate-900">Legal Documents</h2>
-          <p className="text-sm text-slate-500 mt-1">Upload and manage your legal documents</p>
-        </div>
+      {/* Minimal Header */}
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-bold text-slate-900">Documents</h2>
       </div>
 
-      {/* Upload Section */}
-      <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 mb-5">
-        <FileUpload
-          fetchDocuments={fetchDocuments}
-          setSelectedDocument={setSelectedDocument}
-        />
+      {/* Upload */}
+      <div className="mb-3">
+        <FileUpload fetchDocuments={fetchDocuments} setSelectedDocument={setSelectedDocument} />
       </div>
 
+      {/* Clear chat button - always enabled */}
       <button
         onClick={clearChat}
-        disabled={!selectedDocument}
-        className="w-full rounded-2xl bg-red-600 px-5 py-4 text-white text-base font-semibold transition-colors duration-200 hover:bg-red-500 disabled:bg-slate-300 disabled:text-slate-500"
+        className="w-full rounded-md bg-red-600 px-4 py-2 text-white text-sm font-semibold mb-4 hover:bg-red-500"
       >
-        🗑 Clear Chat
+        Clear Chat
       </button>
 
-      {/* Documents */}
-      <div className="mt-8">
-        <p className="text-slate-500 uppercase tracking-[0.25em] text-xs font-semibold mb-4">
-          {documents.length} Legal Document{documents.length !== 1 ? "s" : ""}
-        </p>
+      {/* Documents list */}
+      <div className="flex-1 overflow-auto">
+        <p className="text-slate-500 uppercase tracking-wider text-xs font-semibold mb-3">My Documents</p>
 
         {documents.length === 0 ? (
-          <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 text-center">
-            <div className="text-4xl mb-3 text-slate-500">📂</div>
-            <h3 className="text-lg font-semibold text-slate-900">No Documents</h3>
-            <p className="text-sm text-slate-500 mt-2">Upload your first legal document.</p>
+          <div className="rounded-md border border-slate-200 bg-slate-50 p-6 text-center">
+            <div className="text-3xl mb-2 text-slate-500">📂</div>
+            <p className="text-sm text-slate-500">No documents — upload one to get started.</p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {documents.map((doc) => (
               <div
                 key={doc.id}
                 onClick={() => setSelectedDocument(doc)}
-                className={`flex items-center justify-between cursor-pointer rounded-3xl border p-4 transition duration-200 ${
-                  selectedDocument?.id === doc.id
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-slate-200 bg-white hover:border-blue-300"
+                className={`flex items-center justify-between cursor-pointer rounded-md border p-3 transition duration-150 ${
+                  selectedDocument?.id === doc.id ? "border-blue-500 bg-blue-50" : "border-slate-200 bg-white hover:border-blue-300"
                 }`}
               >
-                <div className="flex items-center gap-4 min-w-0">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center text-xl text-blue-600">
-                    📄
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="truncate text-sm font-semibold text-slate-900">{doc.filename}</h3>
-                    <p className="text-xs text-slate-500 mt-1">Legal Document #{doc.id}</p>
-                  </div>
+                <div className="min-w-0 pr-3">
+                  <h3 className="truncate text-sm font-medium text-slate-900">{doc.filename}</h3>
                 </div>
+
                 <button
                   onClick={(e) => handleDelete(e, doc)}
-                  className="rounded-full p-2 text-slate-400 hover:text-red-500"
+                  className="text-slate-400 hover:text-red-500 ml-3"
                   title="Delete document"
                 >
                   🗑

@@ -255,8 +255,7 @@ function FileUpload({
   // ============================================
 
   return (
-    <div className="space-y-4">
-      {/* Hidden Input */}
+    <div className="space-y-2">
       <input
         ref={fileInputRef}
         type="file"
@@ -269,21 +268,10 @@ function FileUpload({
         type="button"
         onClick={handleClick}
         disabled={uploading}
-        className="w-full rounded-2xl bg-blue-600 px-5 py-4 text-sm font-semibold text-white transition-colors duration-200 hover:bg-blue-500 disabled:bg-slate-300 disabled:text-slate-500"
+        className="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 disabled:bg-slate-300"
       >
-        {uploading ? "Uploading..." : "Upload Legal Document"}
+        {uploading ? "Uploading..." : "Upload Document"}
       </button>
-
-      <p className="text-xs text-slate-500 leading-6">
-        Supports legal PDF and DOCX documents such as Employment Contracts, NDAs, Rental Agreements, Court Orders, Policies, Terms & Conditions, and other legal documents.
-      </p>
-
-      <div className="flex flex-wrap gap-2 text-xs text-slate-500">
-        <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-1">PDF</span>
-        <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-1">DOC</span>
-        <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-1">DOCX</span>
-        <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-1 text-emerald-600">Verified</span>
-      </div>
     </div>
   );
 
