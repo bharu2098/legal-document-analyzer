@@ -158,355 +158,89 @@ function ChatBox({
   return (
     <div className="flex-1 flex flex-col bg-[#0B111D] overflow-hidden">
 
-  {/* ================= HEADER ================= */}
-
-  <div className="h-16 flex items-center justify-between px-8 border-b border-slate-800 bg-[#111827]">
-
-    {selectedDocument ? (
-
-      <div className="flex flex-col">
-
-        <h2 className="text-lg font-semibold text-white truncate">
-          📄 {selectedDocument.filename}
-        </h2>
-
-        <p className="text-xs text-slate-500">
-          Document analyzer workspace
-          Document Analyzer
-        </p>
-
-        <p className="text-xs text-slate-500">
-          Upload a PDF or DOCX document to begin analysis
-        </p>
-
-      </div>
-
-    ) : (
-
-      <div className="text-sm text-slate-500">
-        Select a document to start the chat.
-      </div>
-
-    )}
-
-  </div>
-
-  {/* ================= CHAT AREA ================= */}
-
-  <div className="flex-1 overflow-y-auto bg-[#0B111D]">
-
-    <div className="max-w-6xl mx-auto px-8 py-10">
-
-      {/* ================= WELCOME ================= */}
-
-      {!selectedDocument && messages.length === 0 && (
-
-<div className="min-h-[72vh] flex items-center justify-center">
-
-          <div className="text-center max-w-4xl">
-
-            <h1 className="text-5xl font-bold text-white mb-6">
-              Document Analyzer
-            </h1>
-
-            <p className="text-xl text-slate-400 leading-9">
-              Upload contracts, agreements, reports, policies, notices and other documents. Ask AI to summarize content, identify key points, detect risks, and answer questions instantly.
-            </p>
-
-          </div>
-
+      <header className="h-16 flex items-center justify-between px-8 border-b border-slate-800 bg-[#111827]">
+        <div>
+          <h2 className="text-lg font-semibold text-white truncate">
+            {selectedDocument ? selectedDocument.filename : "No document selected"}
+          </h2>
+          <p className="text-sm text-slate-500 mt-1">
+            {selectedDocument
+              ? "Review the uploaded document and ask a question."
+              : "Upload and select a document to begin."}
+          </p>
         </div>
+      </header>
 
-      )}
+      <div className="flex-1 overflow-y-auto bg-[#0B111D]">
+        <div className="max-w-6xl mx-auto px-8 py-10">
 
-      {/* ================= READY TO CHAT ================= */}
-
-      {selectedDocument && messages.length === 0 && !loading && (
-
-<div className="min-h-[72vh] flex items-center justify-center">
-
-          <div className="max-w-3xl w-full">
-
-            <h2 className="text-4xl font-bold text-white text-center mb-4">
-              💬 Ready to Chat
-            </h2>
-
-            <p className="text-center text-slate-400 text-lg mb-10">
-              Ask anything about this legal document.
-            </p>
-
-            <div className="grid gap-4">
-
-              <button
-                onClick={() =>
-                  sendQuestion("Summarize this legal document")
-                }
-                className="rounded-2xl bg-[#161B22] border border-slate-700 hover:border-blue-500 hover:bg-[#1E293B] transition-all duration-300 p-6 text-left text-slate-200"
-              >
-                📌 Summarize this legal document
-              </button>
-
-              <button
-                onClick={() =>
-                  sendQuestion("What are the key legal points?")
-                }
-                className="rounded-2xl bg-[#161B22] border border-slate-700 hover:border-blue-500 hover:bg-[#1E293B] transition-all duration-300 p-6 text-left text-slate-200"
-              >
-                📌 What are the key legal points?
-              </button>
-
-              <button
-                onClick={() =>
-                  sendQuestion(
-                    "What obligations or responsibilities are mentioned?"
-                  )
-                }
-                className="rounded-2xl bg-[#161B22] border border-slate-700 hover:border-blue-500 hover:bg-[#1E293B] transition-all duration-300 p-6 text-left text-slate-200"
-              >
-                📌 What obligations or responsibilities are mentioned?
-              </button>
-
-              <button
-                onClick={() =>
-                  sendQuestion(
-                    "Are there any important dates, penalties, or risks?"
-                  )
-                }
-                className="rounded-2xl bg-[#161B22] border border-slate-700 hover:border-blue-500 hover:bg-[#1E293B] transition-all duration-300 p-6 text-left text-slate-200"
-              >
-                📌 Are there any important dates, penalties, or risks?
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      )}
-
-      {/* ================= CHAT MESSAGES ================= */}
-          {selectedDocument && (
-        <>
-
-          {messages.map((msg, index) => (
-
-            <div
-              key={index}
-              className={`mb-8 flex ${
-                msg.sender === "user"
-                  ? "justify-end"
-                  : "justify-start"
-              }`}
-            >
-
-              <div
-                className={`w-full max-w-5xl ${
-                  msg.sender === "user"
-                    ? "flex justify-end"
-                    : "flex justify-start"
-                }`}
-              >
-
-                <div
-                  className={`rounded-[28px] px-7 py-6 shadow-xl transition-all duration-300 ${
-                    msg.sender === "user"
-                      ? "max-w-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white"
-                      : "w-full bg-[#111827] border border-slate-800 text-slate-100"
-                  }`}
-                >
-
-                  {/* Sender */}
-
-                  <div className="flex items-center justify-between mb-4">
-
-                    <span
-                      className={`text-xs font-semibold uppercase tracking-wider ${
-                        msg.sender === "user"
-                          ? "text-blue-100"
-                          : "text-slate-400"
-                      }`}
-                    >
-                      {msg.sender === "user"
-                        ? "You"
-                        : "AI Legal Assistant"}
-                    </span>
-
-                    {msg.sender === "ai" && (
-
-                      <button
-                        onClick={() => {
-
-                          navigator.clipboard.writeText(msg.text);
-
-                          setCopiedIndex(index);
-
-                          setTimeout(() => {
-                            setCopiedIndex(null);
-                          }, 2000);
-
-                        }}
-                        title="Copy answer"
-                        className="p-2 rounded-lg text-slate-500 hover:bg-slate-700 hover:text-white transition-all duration-200"
-                      >
-
-                        {copiedIndex === index ? "✅" : "📋"}
-
-                      </button>
-
-                    )}
-
-                  </div>
-
-                  {/* Message */}
-
-                  <div className="whitespace-pre-wrap break-words leading-8 text-[15px]">
-
-                    {msg.text}
-
-                  </div>
-
-                  {/* Time */}
-
-                  <div
-                    className={`mt-5 text-xs ${
-                      msg.sender === "user"
-                        ? "text-blue-100"
-                        : "text-slate-500"
-                    }`}
-                  >
-                    {msg.time}
-                  </div>
-
-                </div>
-
+          {!selectedDocument && messages.length === 0 && (
+            <div className="min-h-[72vh] flex items-center justify-center">
+              <div className="w-full max-w-2xl rounded-3xl border border-slate-700 bg-[#111827] p-10 text-center">
+                <h1 className="text-4xl font-semibold text-white mb-4">
+                  Document Analyzer
+                </h1>
+                <p className="text-base text-slate-400 leading-7">
+                  Upload a document and ask a question to get a concise, professional summary and insight report.
+                </p>
               </div>
-
             </div>
-
-          ))}
-
-          {/* Loading */}
-
-          {loading && (
-
-            <div className="mb-8 flex justify-start">
-
-              <div className="w-full max-w-5xl">
-
-                <div className="rounded-3xl bg-[#161B22] border border-slate-800 px-7 py-6">
-
-                  <p className="text-xs uppercase tracking-wider font-semibold text-slate-400 mb-4">
-                    AI Legal Assistant
-                  </p>
-
-                  <p className="text-slate-400 mb-5">
-                    Analyzing your legal document...
-                  </p>
-
-                  <div className="flex gap-2">
-
-                    <div className="w-2 h-2 rounded-full bg-blue-500 animate-bounce"></div>
-
-                    <div className="w-2 h-2 rounded-full bg-blue-500 animate-bounce [animation-delay:.2s]"></div>
-
-                    <div className="w-2 h-2 rounded-full bg-blue-500 animate-bounce [animation-delay:.4s]"></div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
           )}
 
-          <div ref={messagesEndRef}></div>
-
-        </>
-      )}
-            {/* ================= NO DOCUMENT BUT MESSAGE EXISTS ================= */}
-
-      {!selectedDocument && messages.length > 0 && (
-
-        <>
-          {messages.map((msg, index) => (
-
-            <div
-              key={index}
-              className={`mb-8 flex ${
-                msg.sender === "user"
-                  ? "justify-end"
-                  : "justify-start"
-              }`}
-            >
-
-              <div
-                className={`rounded-3xl px-7 py-6 shadow-xl ${
-                  msg.sender === "user"
-                    ? "max-w-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white"
-                    : "max-w-4xl bg-[#161B22] border border-slate-800 text-slate-100"
-                }`}
-              >
-
-                <div className="text-xs uppercase tracking-wider font-semibold mb-3">
-
-                  {msg.sender === "user"
-                    ? "You"
-                    : "AI Legal Assistant"}
-
-                </div>
-
-                <div className="whitespace-pre-wrap break-words leading-8">
-
-                  {msg.text}
-
-                </div>
-
-                <div
-                  className={`mt-5 text-xs ${
-                    msg.sender === "user"
-                      ? "text-blue-100"
-                      : "text-slate-500"
-                  }`}
-                >
-                  {msg.time}
-                </div>
-
+          {selectedDocument && messages.length === 0 && !loading && (
+            <div className="min-h-[60vh] flex items-center justify-center">
+              <div className="w-full max-w-2xl rounded-3xl border border-slate-700 bg-[#111827] p-10">
+                <h2 className="text-3xl font-semibold text-white mb-3">
+                  Ask a question about this document
+                </h2>
+                <p className="text-sm text-slate-400 leading-7">
+                  Enter a query below to review clauses, summarize sections, or confirm obligations.
+                </p>
               </div>
-
             </div>
+          )}
 
-          ))}
+          {loading && (
+            <div className="min-h-[40vh] flex items-center justify-center">
+              <div className="rounded-3xl border border-slate-700 bg-[#111827] px-8 py-6 text-center">
+                <p className="text-slate-400">Processing the request...</p>
+              </div>
+            </div>
+          )}
 
-          <div ref={messagesEndRef}></div>
+          {messages.length > 0 && (
+            <div className="space-y-4">
+              {messages.map((msg, index) => (
+                <div key={index} className="rounded-3xl border border-slate-700 bg-[#111827] p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs uppercase tracking-wider text-slate-400">
+                      {msg.sender === "user" ? "Question" : "Answer"}
+                    </span>
+                    <span className="text-xs text-slate-500">{msg.time}</span>
+                  </div>
+                  <div className="whitespace-pre-wrap text-base leading-7 text-slate-100">
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
 
-        </>
+              <div ref={messagesEndRef} />
+            </div>
+          )}
 
-      )}
+        </div>
+      </div>
 
+      <div className="sticky bottom-0 border-t border-slate-800 bg-[#0B111D]">
+        <div className="max-w-6xl mx-auto px-8 py-6">
+          <ChatInput
+            onSend={sendQuestion}
+            loading={loading}
+            selectedDocument={selectedDocument}
+          />
+        </div>
+      </div>
     </div>
-  </div>
-
-  {/* ================= INPUT ================= */}
-
-  <div className="sticky bottom-0 bg-gradient-to-t from-[#0B111D] via-[#0B111D] to-transparent pt-6">
-
-    <div className="max-w-6xl mx-auto px-8 pb-8">
-
-      <ChatInput
-        onSend={sendQuestion}
-        loading={loading}
-        selectedDocument={selectedDocument}
-      />
-
-    </div>
-
-  </div>
-
-</div>
-
   );
 }
 
