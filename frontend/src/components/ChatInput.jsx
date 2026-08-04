@@ -24,7 +24,7 @@ function ChatInput({
   };
 
   return (
-    <div className="flex-shrink-0 bg-[#0B111D] border-t border-slate-800 px-8 py-6">
+    <div className="flex-shrink-0 bg-[#0B111D] border-t border-slate-800 px-8 py-5">
 
       <div className="max-w-6xl mx-auto">
 
@@ -33,7 +33,7 @@ function ChatInput({
             flex
             items-center
             gap-3
-            rounded-[32px]
+            rounded-[28px]
             border
             border-slate-700
             bg-[#111827]
@@ -42,9 +42,9 @@ function ChatInput({
             shadow-xl
             transition-all
             duration-300
-            focus-within:border-violet-500
+            focus-within:border-blue-500
             focus-within:ring-2
-            focus-within:ring-violet-500/20
+            focus-within:ring-blue-500/20
           "
         >
 
@@ -60,8 +60,8 @@ function ChatInput({
             disabled={disabled}
             placeholder={
               selectedDocument
-                ? "Ask anything about this document..."
-                : "Upload and select a legal document first..."
+                ? "Ask a question about this document..."
+                : "Upload and select a document to begin..."
             }
             className="
               flex-1
@@ -77,18 +77,6 @@ function ChatInput({
             "
           />
 
-          {/* Character Count */}
-
-          {question.length > 0 && (
-
-            <span className="hidden md:block text-xs text-slate-500">
-
-              {question.length}/500
-
-            </span>
-
-          )}
-
           {/* Send Button */}
 
           <button
@@ -96,17 +84,16 @@ function ChatInput({
             disabled={disabled}
             title="Send Message"
             className="
-              w-14
               h-14
               rounded-[24px]
-              bg-gradient-to-r
-              from-violet-500
-              via-blue-500
-              to-indigo-600
+              bg-blue-600
+              hover:bg-blue-500
               disabled:bg-slate-700
               disabled:cursor-not-allowed
               text-white
-              text-2xl
+              text-base
+              font-semibold
+              px-6
               flex
               items-center
               justify-center
@@ -116,18 +103,11 @@ function ChatInput({
               active:scale-95
             "
           >
-            {loading ? "..." : "➜"}
+            {loading ? "Sending..." : "Send"}
           </button>
 
         </div>
 
-        {/* Bottom Hint */}
-
-        <p className="mt-3 text-center text-xs text-slate-600">
-
-          Press <span className="text-slate-400 font-medium">Enter</span> to send your question
-
-        </p>
 
       </div>
 

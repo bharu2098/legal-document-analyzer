@@ -111,9 +111,9 @@ function Sidebar({
 
       {/* Documents */}
 
-      <div className="flex-1 overflow-y-auto px-6 py-5">
+      <div className="flex-1 overflow-y-auto px-6 py-5 space-y-4">
 
-        <p className="text-blue-300 uppercase tracking-[0.25em] text-xs font-semibold mb-5">
+        <p className="text-slate-400 uppercase tracking-[0.35em] text-xs font-semibold mb-3">
           {documents.length} Legal Document{documents.length !== 1 ? "s" : ""}
         </p>
 
