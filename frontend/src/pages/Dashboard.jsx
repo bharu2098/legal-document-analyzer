@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import SideNav from "../components/SideNav";
-import DocumentPanel from "../components/DocumentPanel";
+import Sidebar from "../components/Sidebar";
 import AIChatPanel from "../components/AIChatPanel";
 
 function Dashboard() {
@@ -30,14 +29,8 @@ function Dashboard() {
       if (response.ok) {
         setDocuments(data);
 
-        if (!selectedDocument && data.length > 0) {
-          setSelectedDocument(data[0]);
-        }
-
         if (selectedDocument) {
-          const updatedDoc = data.find(
-            (doc) => doc.id === selectedDocument.id
-          );
+          const updatedDoc = data.find((doc) => doc.id === selectedDocument.id);
 
           if (updatedDoc) {
             setSelectedDocument(updatedDoc);
@@ -71,34 +64,26 @@ function Dashboard() {
 
       <div className="flex h-[calc(100vh-80px)] overflow-hidden bg-slate-100">
 
-        <SideNav />
+        <Sidebar
+          documents={documents}
+          fetchDocuments={fetchDocuments}
+          selectedDocument={selectedDocument}
+          setSelectedDocument={setSelectedDocument}
+          clearChat={clearChat}
+        />
 
         <main className="flex-1 p-8 overflow-hidden">
-
-          <div className="grid h-full w-full grid-cols-[420px_1fr] gap-8">
-
-            <DocumentPanel
-              documents={documents}
-              fetchDocuments={fetchDocuments}
-              selectedDocument={selectedDocument}
-              setSelectedDocument={setSelectedDocument}
-              clearChat={clearChat}
-            />
-
-            {loading ? (
-              <div className="flex items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-white p-10 shadow-sm">
-                <div className="text-center">
-                  <div className="mx-auto mb-6 h-16 w-16 animate-spin rounded-full border-4 border-slate-200 border-t-blue-500"></div>
-                  <h2 className="text-2xl font-semibold text-slate-900">Loading Workspace...</h2>
-                  <p className="mt-2 text-sm text-slate-500">Preparing your AI Legal Assistant</p>
-                </div>
+          {loading ? (
+            <div className="flex h-full items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-white p-10 shadow-sm">
+              <div className="text-center">
+                <div className="mx-auto mb-6 h-16 w-16 animate-spin rounded-full border-4 border-slate-200 border-t-blue-500"></div>
+                <h2 className="text-2xl font-semibold text-slate-900">Loading Workspace...</h2>
+                <p className="mt-2 text-sm text-slate-500">Preparing your AI Legal Assistant</p>
               </div>
-            ) : (
-              <AIChatPanel selectedDocument={selectedDocument} clearChatTrigger={clearChatTrigger} />
-            )}
-
-          </div>
-
+            </div>
+          ) : (
+            <AIChatPanel selectedDocument={selectedDocument} clearChatTrigger={clearChatTrigger} />
+          )}
         </main>
 
       </div>

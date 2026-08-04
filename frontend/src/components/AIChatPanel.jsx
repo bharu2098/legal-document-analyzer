@@ -68,10 +68,16 @@ export default function AIChatPanel({ selectedDocument, clearChatTrigger }) {
     <section className="flex-1 flex flex-col rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-900/5 overflow-hidden">
       <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-6 py-5">
         <div>
-          <p className="text-sm text-slate-500">AI Chat</p>
-          <h2 className="text-xl font-semibold text-slate-900">Ask anything about your legal documents</h2>
+          <p className="text-sm text-slate-500">Document Chat</p>
+          <h2 className="text-xl font-semibold text-slate-900">
+            {selectedDocument ? selectedDocument.filename : "Select a document to start"}
+          </h2>
         </div>
-        <div className="rounded-full bg-slate-100 px-3 py-2 text-sm text-slate-500">☀️</div>
+        {selectedDocument && (
+          <div className="rounded-full bg-slate-100 px-3 py-2 text-sm text-slate-500">
+            Document selected
+          </div>
+        )}
       </div>
 
       <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4 bg-slate-50">
@@ -82,7 +88,7 @@ export default function AIChatPanel({ selectedDocument, clearChatTrigger }) {
         ) : messages.length === 0 && !loading ? (
           <div className="mx-auto flex h-full max-w-2xl flex-col items-center justify-center rounded-3xl border border-dashed border-slate-200 bg-white p-10 text-center">
             <h3 className="text-lg font-semibold text-slate-900 mb-3">Ready to chat</h3>
-            <p className="text-sm text-slate-500">Ask questions about clauses, obligations, dates, parties, or risks.</p>
+            <p className="text-sm text-slate-500">Ask questions about the selected document.</p>
           </div>
         ) : (
           messages.map((msg, index) => (
@@ -103,7 +109,9 @@ export default function AIChatPanel({ selectedDocument, clearChatTrigger }) {
         <div ref={messagesEndRef} />
       </div>
 
-      <ChatInput onSend={sendQuestion} loading={loading} selectedDocument={selectedDocument} />
+      {selectedDocument && (
+        <ChatInput onSend={sendQuestion} loading={loading} selectedDocument={selectedDocument} />
+      )}
     </section>
   );
 }
