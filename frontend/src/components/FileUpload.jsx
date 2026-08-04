@@ -1,23 +1,32 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 function FileUpload({
   fetchDocuments,
   setSelectedDocument,
 }) {
+
   const fileInputRef = useRef(null);
 
+  const [uploading, setUploading] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
+
+  // ============================================
+  // Open File Picker
+  // ============================================
+
   const handleClick = () => {
-    fileInputRef.current.click();
+
+    if (!uploading) {
+      fileInputRef.current.click();
+    }
+
   };
 
-  const handleFileChange = async (e) => {
-    const file = e.target.files[0];
+  // ============================================
+  // Validate File
+  // ============================================
 
-    if (!file) return;
-
-    // ======================================================
-    // Allowed File Types
-    // ======================================================
+  const validateFile = (file) => {
 
     const allowedTypes = [
       "application/pdf",
@@ -26,39 +35,63 @@ function FileUpload({
     ];
 
     if (!allowedTypes.includes(file.type)) {
-      alert("❌ Only PDF and DOCX files are supported.");
 
-      e.target.value = "";
-      return;
+      alert("❌ Only PDF and DOCX legal documents are supported.");
+
+      return false;
+
     }
-
-    // ======================================================
-    // Maximum File Size
-    // ======================================================
 
     const MAX_FILE_SIZE = 20 * 1024 * 1024;
 
     if (file.size > MAX_FILE_SIZE) {
-      alert("❌ File size must be less than 20 MB.");
 
-      e.target.value = "";
+      alert("❌ Maximum file size is 20 MB.");
+
+      return false;
+
+    }
+
+    return true;
+
+  };
+
+  // ============================================
+  // Upload File
+  // ============================================
+
+  const uploadFile = async (file, inputElement = null) => {
+        if (!validateFile(file)) {
+
+      if (inputElement) {
+        inputElement.value = "";
+      }
+
       return;
+
     }
 
     const token = localStorage.getItem("token");
 
     if (!token) {
+
       alert("❌ Please login first.");
+
       return;
+
     }
 
     const formData = new FormData();
+
     formData.append("file", file);
 
+    setUploading(true);
+
     try {
-      // ======================================================
+
+      // ============================================
       // Upload Document
-      // ======================================================
+      // ============================================
 
       const response = await fetch(
         "https://shimmering-sparkle-production-88ac.up.railway.app/documents/upload",
@@ -73,36 +106,47 @@ function FileUpload({
 
       const data = await response.json();
 
-      // ======================================================
+      // ============================================
       // Upload Failed
-      // ======================================================
+      // ============================================
 
       if (!response.ok) {
+
         let message =
           "❌ Upload failed. Please upload a valid legal document.";
 
         if (typeof data.detail === "string") {
+
           message = data.detail;
-        } else if (
+
+        }
+
+        else if (
           typeof data.detail === "object" &&
           data.detail !== null
         ) {
+
           message =
             `❌ ${data.detail.message}\n\n` +
             `📄 Detected Document : ${data.detail.detected_document_type}\n` +
-            `🎯 Confidence        : ${data.detail.confidence}%\n\n` +
+            `🎯 Confidence : ${data.detail.confidence}%\n\n` +
             `📝 Reason:\n${data.detail.reason}`;
+
         }
 
         alert(message);
 
-        e.target.value = "";
+        if (inputElement) {
+          inputElement.value = "";
+        }
+
         return;
+
       }
 
-      // ======================================================
+      // ============================================
       // Refresh Documents
-      // ======================================================
+      // ============================================
 
       const docsResponse = await fetch(
         "https://shimmering-sparkle-production-88ac.up.railway.app/documents/",
@@ -116,6 +160,7 @@ function FileUpload({
       const docs = await docsResponse.json();
 
       if (docsResponse.ok) {
+
         fetchDocuments();
 
         const uploadedDoc = docs.find(
@@ -127,23 +172,94 @@ function FileUpload({
         }
 
         alert("✅ Legal document uploaded successfully.");
-      } else {
+
+      }
+
+      else {
+
         alert(
           "⚠️ Document uploaded successfully, but failed to refresh the document list."
         );
+
       }
-    } catch (error) {
+
+    }
+
+    catch (error) {
+
       console.error(error);
 
       alert("❌ Unable to connect to the server.");
-    } finally {
-      e.target.value = "";
+
     }
+
+    finally {
+
+      setUploading(false);
+
+      if (inputElement) {
+        inputElement.value = "";
+      }
+
+    }
+
   };
-    return (
+
+  // ============================================
+  // File Input Change
+  // ============================================
+
+  const handleFileChange = async (e) => {
+        const file = e.target.files[0];
+
+    if (!file) return;
+
+    uploadFile(file, e.target);
+
+  };
+
+  // ============================================
+  // Drag & Drop
+  // ============================================
+
+  const handleDrop = (e) => {
+
+    e.preventDefault();
+
+    setDragActive(false);
+
+    const file = e.dataTransfer.files[0];
+
+    if (!file) return;
+
+    uploadFile(file);
+
+  };
+
+  const handleDragOver = (e) => {
+
+    e.preventDefault();
+
+    setDragActive(true);
+
+  };
+
+  const handleDragLeave = () => {
+
+    setDragActive(false);
+
+  };
+
+  // ============================================
+  // UI
+  // ============================================
+
+  return (
+
     <div className="space-y-5">
 
-      {/* Hidden File Input */}
+      {/* Hidden Input */}
+
       <input
         ref={fileInputRef}
         type="file"
@@ -152,110 +268,126 @@ function FileUpload({
         onChange={handleFileChange}
       />
 
-      {/* Upload Button */}
-      <button
+      {/* Upload Area */}
+
+      <div
         onClick={handleClick}
-        className="
-          w-full
-          py-4
-          rounded-2xl
-          bg-gradient-to-r
-          from-indigo-600
-          via-violet-600
-          to-blue-600
-          hover:from-indigo-500
-          hover:via-violet-500
-          hover:to-blue-500
-          text-white
-          text-base
-          font-semibold
-          shadow-xl
-          shadow-indigo-900/40
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        className={`
+          cursor-pointer
+          rounded-3xl
+          border-2
+          border-dashed
+          px-6
+          py-10
+          text-center
           transition-all
           duration-300
-          hover:scale-[1.02]
-          active:scale-95
-        "
+          shadow-lg
+          ${
+            dragActive
+              ? "border-blue-500 bg-blue-500/10 scale-[1.02]"
+              : "border-slate-700 bg-[#161B22] hover:border-blue-500 hover:bg-[#1B2430]"
+          }
+        `}
       >
-        ⚖️ Upload Legal Document
-      </button>
 
-      {/* Supported Documents Card */}
-      <div className="rounded-2xl border border-slate-700 bg-[#111827] p-5 shadow-lg">
+        <div className="text-6xl mb-5">
 
-        <h3 className="text-white font-bold text-sm uppercase tracking-wider mb-4">
-          Supported Legal Documents
-        </h3>
-
-        <div className="space-y-2 text-sm text-slate-300">
-
-          <div>📄 Employment Contract</div>
-
-          <div>📄 Service Agreement</div>
-
-          <div>📄 Rental Agreement</div>
-
-          <div>📄 Lease Agreement</div>
-
-          <div>📄 Non-Disclosure Agreement (NDA)</div>
-
-          <div>📄 Memorandum of Understanding (MoU)</div>
-
-          <div>📄 Court Order</div>
-
-          <div>📄 Legal Notice</div>
-
-          <div>📄 Insurance Policy</div>
-
-          <div>📄 Privacy Policy</div>
-
-          <div>📄 Terms & Conditions</div>
-
-          <div>📄 Partnership Agreement</div>
+          {uploading ? "⏳" : "📤"}
 
         </div>
 
-      </div>
+        <h3 className="text-xl font-semibold text-white">
 
-      {/* Information Card */}
-      <div className="rounded-2xl border border-indigo-500/30 bg-gradient-to-r from-indigo-600/10 to-violet-600/10 p-4">
+          {uploading
+            ? "Uploading..."
+            : "Upload Legal Document"}
 
-        <h4 className="text-indigo-300 font-semibold mb-2">
-          AI Validation
-        </h4>
+        </h3>
 
-        <p className="text-xs text-slate-300 leading-6">
-          Every uploaded document is automatically analyzed by AI.
-          Only genuine legal documents such as contracts,
-          agreements, court orders, legal notices, policies and
-          similar legal documents are accepted.
+        <p className="text-sm text-slate-400 mt-3">
+
+          Drag & Drop your legal document here
+
         </p>
 
-      </div>
+        <p className="text-xs text-slate-500 mt-1">
 
-      {/* Limits */}
-      <div className="rounded-xl bg-[#0F172A] border border-slate-700 p-4">
+          or click to browse
 
-        <h4 className="text-white font-semibold mb-2">
-          Upload Limits
-        </h4>
+        </p>
 
-        <div className="space-y-2 text-xs text-slate-400">
+        <button
+          type="button"
+          disabled={uploading}
+          className="
+            mt-8
+            px-8
+            py-3
+            rounded-xl
+            bg-blue-600
+            hover:bg-blue-500
+            text-white
+            font-medium
+            transition-all
+            duration-300
+            disabled:opacity-60
+            disabled:cursor-not-allowed
+          "
+        >
 
-          <p>✅ PDF & DOCX only</p>
+          {uploading
+            ? "Uploading..."
+            : "Choose File"}
 
-          <p>✅ Maximum file size: 20 MB</p>
+        </button>
 
-          <p>✅ AI Legal Document Validation</p>
+        <div className="flex justify-center gap-2 mt-6 flex-wrap">
 
-          <p>✅ Secure cloud processing</p>
+          <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs">
+            PDF
+          </span>
+
+          <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs">
+            DOC
+          </span>
+
+          <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs">
+            DOCX
+          </span>
+
+          <span className="px-3 py-1 rounded-full bg-green-900/20 border border-green-600 text-green-400 text-xs">
+            AI Verified
+          </span>
+
+        </div>
+                {/* Footer */}
+
+        <div className="mt-6 border-t border-slate-700 pt-5">
+
+          <p className="text-xs text-slate-500">
+
+            PDF • DOC • DOCX
+
+          </p>
+
+          <p className="text-xs text-slate-600 mt-1">
+
+            Maximum file size: 20 MB
+
+          </p>
 
         </div>
 
       </div>
 
     </div>
+
   );
+
 }
 
 export default FileUpload;

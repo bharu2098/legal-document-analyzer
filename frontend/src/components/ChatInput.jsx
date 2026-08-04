@@ -24,81 +24,111 @@ function ChatInput({
   };
 
   return (
-    <div className="flex-shrink-0 border-t border-slate-700 bg-slate-900 px-8 py-6">
-      <div className="flex items-center gap-4">
+    <div className="flex-shrink-0 bg-[#0B1120] border-t border-slate-800 px-8 py-6">
 
-        <input
-          autoFocus
-          type="text"
-          maxLength={500}
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          onKeyDown={handleKeyDown}
-          disabled={disabled}
-          placeholder={
-            selectedDocument
-              ? "Ask a question about this legal document..."
-              : "Upload and select a legal document first..."
-          }
+      <div className="max-w-5xl mx-auto">
+
+        <div
           className="
-            flex-1
-            bg-slate-800
+            flex
+            items-center
+            gap-3
+            rounded-3xl
             border
             border-slate-700
-            rounded-xl
-            px-5
-            py-4
-            text-white
-            placeholder-slate-400
-            outline-none
+            bg-[#161B22]
+            px-4
+            py-3
+            shadow-xl
             transition-all
             duration-300
-            focus:border-blue-500
-            focus:ring-2
-            focus:ring-blue-500
-            disabled:opacity-50
-            disabled:cursor-not-allowed
-          "
-        />
-
-        <button
-          onClick={handleSend}
-          disabled={disabled}
-          title="Ask AI about this legal document"
-          className="
-            min-w-[170px]
-            bg-gradient-to-r
-            from-blue-600
-            via-indigo-600
-            to-violet-600
-            hover:from-blue-500
-            hover:via-indigo-500
-            hover:to-violet-500
-            text-white
-            font-semibold
-            px-8
-            py-4
-            rounded-xl
-            shadow-lg
-            transition-all
-            duration-300
-            hover:scale-[1.03]
-            active:scale-95
-            disabled:opacity-50
-            disabled:cursor-not-allowed
-            disabled:hover:scale-100
+            focus-within:border-blue-500
+            focus-within:ring-2
+            focus-within:ring-blue-500/20
           "
         >
-          {loading ? "⚖️ Analyzing..." : "🚀 Send"}
-        </button>
+
+          {/* Input */}
+
+          <input
+            autoFocus
+            type="text"
+            maxLength={500}
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            onKeyDown={handleKeyDown}
+            disabled={disabled}
+            placeholder={
+              selectedDocument
+                ? "Ask anything about this document..."
+                : "Upload and select a legal document first..."
+            }
+            className="
+              flex-1
+              bg-transparent
+              border-none
+              outline-none
+              text-white
+              placeholder-slate-500
+              text-[15px]
+              py-3
+              disabled:opacity-50
+              disabled:cursor-not-allowed
+            "
+          />
+
+          {/* Character Count */}
+
+          {question.length > 0 && (
+
+            <span className="hidden md:block text-xs text-slate-500">
+
+              {question.length}/500
+
+            </span>
+
+          )}
+
+          {/* Send Button */}
+
+          <button
+            onClick={handleSend}
+            disabled={disabled}
+            title="Send Message"
+            className="
+              w-12
+              h-12
+              rounded-2xl
+              bg-blue-600
+              hover:bg-blue-500
+              disabled:bg-slate-700
+              disabled:cursor-not-allowed
+              text-white
+              text-xl
+              flex
+              items-center
+              justify-center
+              transition-all
+              duration-300
+              hover:scale-105
+              active:scale-95
+            "
+          >
+            {loading ? "..." : "➜"}
+          </button>
+
+        </div>
+
+        {/* Bottom Hint */}
+
+        <p className="mt-3 text-center text-xs text-slate-600">
+
+          Press <span className="text-slate-400 font-medium">Enter</span> to send your question
+
+        </p>
 
       </div>
 
-      {selectedDocument && (
-        <p className="mt-3 text-center text-xs text-slate-500">
-          AI responses are generated from the selected legal document.
-        </p>
-      )}
     </div>
   );
 }

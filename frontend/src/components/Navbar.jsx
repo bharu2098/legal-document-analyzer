@@ -15,28 +15,23 @@ function Navbar() {
   };
 
   return (
-    <nav className="h-20 bg-gradient-to-r from-[#020617] via-[#0F172A] to-[#111827] border-b border-slate-800 shadow-2xl">
-
+    <header className="h-24 bg-[#0B1120] border-b border-slate-800 shadow-xl">
       <div className="h-full px-8 flex items-center justify-between">
 
         {/* Left */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
 
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-900/40">
-
-            <span className="text-3xl">
-              ⚖️
-            </span>
-
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 flex items-center justify-center shadow-xl">
+            <span className="text-4xl">⚖️</span>
           </div>
 
           <div>
 
-            <h1 className="text-3xl font-bold text-white tracking-wide">
+            <h1 className="text-4xl font-bold tracking-tight text-white">
               AI Legal Document Analyzer
             </h1>
 
-            <p className="text-sm text-slate-400 mt-1">
+            <p className="text-slate-400 text-lg mt-1">
               Intelligent Legal Document Analysis using AI
             </p>
 
@@ -45,49 +40,54 @@ function Navbar() {
         </div>
 
         {/* Right */}
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-8">
 
-          <div className="hidden lg:flex flex-col items-end">
+          <div className="text-right">
 
-            <span className="text-white font-semibold">
+            <p className="text-white text-xl font-semibold">
               Welcome
-            </span>
+            </p>
 
-            <span className="text-slate-400 text-sm">
-              Secure AI Workspace
-            </span>
+            <p className="text-slate-400">
+              Secure Workspace
+            </p>
 
           </div>
 
           <button
             onClick={handleLogout}
             className="
-              flex items-center gap-2
-              px-6 py-3
-              rounded-xl
+              flex
+              items-center
+              gap-3
+              px-8
+              py-4
+              rounded-2xl
+              border
+              border-red-500/40
               bg-gradient-to-r
-              from-red-600
-              to-red-700
-              hover:from-red-500
+              from-red-900/40
+              via-red-700/40
+              to-red-600/40
+              hover:from-red-700
               hover:to-red-600
               text-white
               font-semibold
-              shadow-lg
-              shadow-red-900/30
+              text-lg
               transition-all
               duration-300
               hover:scale-105
+              shadow-xl
             "
           >
-            🚪
-            <span>Sign Out</span>
+            <span className="text-xl">🚪</span>
+            Sign Out
           </button>
 
         </div>
 
       </div>
-
-    </nav>
+    </header>
   );
 }
 

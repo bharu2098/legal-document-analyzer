@@ -29,12 +29,10 @@ function Dashboard() {
       if (response.ok) {
         setDocuments(data);
 
-        // Auto-select first document
         if (!selectedDocument && data.length > 0) {
           setSelectedDocument(data[0]);
         }
 
-        // Keep selected document valid
         if (selectedDocument) {
           const updatedDoc = data.find(
             (doc) => doc.id === selectedDocument.id
@@ -47,7 +45,7 @@ function Dashboard() {
           }
         }
       } else {
-        alert(data.detail || "Failed to load documents.");
+        alert(data.detail || "Failed to load legal documents.");
       }
     } catch (error) {
       console.error(error);
@@ -66,12 +64,11 @@ function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-[#0D1117]">
 
       <Navbar />
 
-      <div className="flex h-[calc(100vh-64px)] overflow-hidden">
-
+      <div className="flex h-[calc(100vh-80px)] overflow-hidden">
 
         <Sidebar
           documents={documents}
@@ -81,95 +78,290 @@ function Dashboard() {
           clearChat={clearChat}
         />
 
-        <div className="flex-1 min-w-0 min-h-0 flex overflow-hidden">
+        <main className="flex-1 flex justify-center bg-[#0D1117] overflow-hidden">
 
-          {loading ? (
+          <div className="w-full max-w-7xl flex overflow-hidden">
 
-            <div className="h-full flex items-center justify-center">
+            {loading ? (
 
-              <div className="text-center">
+              <div className="flex-1 flex items-center justify-center">
 
-                <div className="flex justify-center mb-6">
-                  <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-                </div>
+                <div className="text-center">
 
-                <h2 className="text-2xl font-bold">
-                  Loading Documents...
-                </h2>
+                  <div className="flex justify-center mb-8">
 
-                <p className="text-gray-500 mt-3">
-                  Preparing your legal workspace.
-                </p>
+                    <div className="w-16 h-16 border-4 border-slate-700 border-t-blue-500 rounded-full animate-spin"></div>
 
-              </div>
+                  </div>
 
-            </div>
+                  <h2 className="text-3xl font-bold text-white">
+                    Loading Workspace...
+                  </h2>
 
-          ) : documents.length === 0 ? (
-
-            <div className="h-full flex items-center justify-center">
-
-              <div className="text-center max-w-2xl px-6">
-
-                <h1 className="text-5xl font-bold mb-6">
-                  ⚖️ AI Legal Document Analyzer
-                </h1>
-
-                <p className="text-gray-600 text-lg mb-8">
-                  Upload legal PDF or DOCX documents and let AI answer
-                  questions, summarize contracts, identify obligations,
-                  penalties, clauses, dates, risks and much more.
-                </p>
-
-                <div className="bg-white rounded-xl shadow-md p-6 text-left">
-
-                  <h3 className="font-bold text-xl mb-4">
-                    Supported Legal Documents
-                  </h3>
-
-                  <ul className="space-y-2 text-gray-600">
-
-                    <li>📄 Employment Contracts</li>
-
-                    <li>📄 Lease Agreements</li>
-
-                    <li>📄 Rental Agreements</li>
-
-                    <li>📄 Non-Disclosure Agreements (NDA)</li>
-
-                    <li>📄 Court Orders</li>
-
-                    <li>📄 Legal Notices</li>
-
-                    <li>📄 Insurance Policies</li>
-
-                    <li>📄 Affidavits</li>
-
-                    <li>📄 Government Legal Documents</li>
-
-                  </ul>
+                  <p className="text-slate-400 mt-3 text-lg">
+                    Preparing your AI Legal Assistant
+                  </p>
 
                 </div>
 
               </div>
 
-            </div>
+            ) : documents.length === 0 ? (
+                <div className="flex-1 flex items-center justify-center px-10 py-10">
 
-          ) : (
+  <div className="max-w-6xl w-full">
 
-            <ChatBox
-              selectedDocument={selectedDocument}
-              clearChatTrigger={clearChatTrigger}
-            />
+    {/* Hero */}
 
-          )}
+    <div className="text-center mb-14">
+
+      <div className="w-28 h-28 mx-auto rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-600 flex items-center justify-center shadow-2xl shadow-blue-900/30 mb-8">
+
+        <span className="text-6xl">
+          ⚖️
+        </span>
+
+      </div>
+
+      <h1 className="text-5xl font-extrabold text-white mb-6">
+        AI Legal Document Analyzer
+      </h1>
+
+      <p className="text-xl text-slate-400 leading-9 max-w-4xl mx-auto">
+        Upload legal PDF or DOCX documents and instantly summarize
+        contracts, explain clauses, identify obligations,
+        detect risks, analyze agreements and ask legal
+        questions using AI.
+      </p>
+
+    </div>
+
+    {/* Feature Cards */}
+
+    <div className="grid lg:grid-cols-3 gap-7 mb-12">
+
+      <div
+        className="
+          rounded-3xl
+          bg-[#161B22]
+          border
+          border-slate-700
+          p-8
+          hover:border-blue-500
+          hover:bg-[#1B2430]
+          transition-all
+          duration-300
+        "
+      >
+
+        <div className="text-5xl mb-5">
+          📄
+        </div>
+
+        <h3 className="text-white text-2xl font-bold mb-3">
+          Legal Documents
+        </h3>
+
+        <p className="text-slate-400 leading-7">
+          Securely upload contracts,
+          agreements, notices,
+          policies and court documents
+          for AI analysis.
+        </p>
+
+      </div>
+
+      <div
+        className="
+          rounded-3xl
+          bg-[#161B22]
+          border
+          border-slate-700
+          p-8
+          hover:border-blue-500
+          hover:bg-[#1B2430]
+          transition-all
+          duration-300
+        "
+      >
+
+        <div className="text-5xl mb-5">
+          🤖
+        </div>
+
+        <h3 className="text-white text-2xl font-bold mb-3">
+          AI Analysis
+        </h3>
+
+        <p className="text-slate-400 leading-7">
+          Automatically summarize legal
+          documents, explain clauses and
+          answer complex legal questions
+          using AI.
+        </p>
+
+      </div>
+            <div
+        className="
+          rounded-3xl
+          bg-[#161B22]
+          border
+          border-slate-700
+          p-8
+          hover:border-blue-500
+          hover:bg-[#1B2430]
+          transition-all
+          duration-300
+        "
+      >
+
+        <div className="text-5xl mb-5">
+          🔒
+        </div>
+
+        <h3 className="text-white text-2xl font-bold mb-3">
+          Secure Workspace
+        </h3>
+
+        <p className="text-slate-400 leading-7">
+          Your uploaded legal documents
+          remain protected while being
+          processed inside your secure
+          AI workspace.
+        </p>
+
+      </div>
+
+    </div>
+
+    {/* Supported Documents */}
+
+    <div
+      className="
+        rounded-3xl
+        bg-[#161B22]
+        border
+        border-slate-700
+        p-8
+        shadow-xl
+      "
+    >
+
+      <h2 className="text-2xl font-bold text-white mb-8">
+        Supported Legal Documents
+      </h2>
+
+      <div className="grid md:grid-cols-3 gap-5">
+
+        <div className="rounded-2xl bg-[#0D1117] border border-slate-700 p-5">
+
+          <h4 className="text-white font-semibold mb-2">
+            📄 Contracts
+          </h4>
+
+          <p className="text-sm text-slate-400">
+            Employment, Service,
+            Sales, Vendor and
+            Business Contracts.
+          </p>
+
+        </div>
+
+        <div className="rounded-2xl bg-[#0D1117] border border-slate-700 p-5">
+
+          <h4 className="text-white font-semibold mb-2">
+            📑 Agreements
+          </h4>
+
+          <p className="text-sm text-slate-400">
+            Lease, Rental,
+            Partnership,
+            MoU and NDA
+            Agreements.
+          </p>
+
+        </div>
+
+        <div className="rounded-2xl bg-[#0D1117] border border-slate-700 p-5">
+
+          <h4 className="text-white font-semibold mb-2">
+            ⚖ Court Documents
+          </h4>
+
+          <p className="text-sm text-slate-400">
+            Court Orders,
+            Legal Notices
+            and Affidavits.
+          </p>
+
+        </div>
+                <div className="rounded-2xl bg-[#0D1117] border border-slate-700 p-5">
+
+          <h4 className="text-white font-semibold mb-2">
+            🛡️ Policies
+          </h4>
+
+          <p className="text-sm text-slate-400">
+            Insurance Policies,
+            Privacy Policies and
+            Terms & Conditions.
+          </p>
+
+        </div>
+
+        <div className="rounded-2xl bg-[#0D1117] border border-slate-700 p-5">
+
+          <h4 className="text-white font-semibold mb-2">
+            🏛️ Government Documents
+          </h4>
+
+          <p className="text-sm text-slate-400">
+            Government Legal Documents
+            and Official Legal
+            Notifications.
+          </p>
+
+        </div>
+
+        <div className="rounded-2xl bg-[#0D1117] border border-slate-700 p-5">
+
+          <h4 className="text-white font-semibold mb-2">
+            🤖 AI Legal Analysis
+          </h4>
+
+          <p className="text-sm text-slate-400">
+            AI summarizes documents,
+            explains clauses, detects risks
+            and answers legal questions.
+          </p>
 
         </div>
 
       </div>
 
     </div>
-  );
+              </div>
+
+        </div>
+
+      ) : (
+
+        <ChatBox
+          selectedDocument={selectedDocument}
+          clearChatTrigger={clearChatTrigger}
+        />
+
+      )}
+
+    </div>
+
+  </main>
+
+</div>
+
+</div>
+
+);
 }
 
 export default Dashboard;
