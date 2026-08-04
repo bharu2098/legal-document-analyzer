@@ -17,7 +17,13 @@ export async function askQuestion(
     }),
   });
 
-  const data = await response.json();
+  let data = {};
+
+  try {
+    data = await response.json();
+  } catch (error) {
+    data = {};
+  }
 
   if (!response.ok) {
     throw new Error(data.detail || "Chat failed");

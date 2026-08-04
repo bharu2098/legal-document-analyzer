@@ -12,13 +12,19 @@ export async function uploadDocument(file, token) {
     body: formData,
   });
 
-  const data = await response.json();
+  let data = {};
+
+  try {
+    data = await response.json();
+  } catch (error) {
+    data = {};
+  }
 
   if (!response.ok) {
     throw new Error(
       typeof data.detail === "string"
         ? data.detail
-        : data.detail.message || "Upload failed"
+        : data.detail?.message || "Upload failed"
     );
   }
 
@@ -27,12 +33,19 @@ export async function uploadDocument(file, token) {
 
 export async function getDocuments(token) {
   const response = await fetch(`${BASE_URL}/documents/`, {
+    method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  const data = await response.json();
+  let data = {};
+
+  try {
+    data = await response.json();
+  } catch (error) {
+    data = {};
+  }
 
   if (!response.ok) {
     throw new Error(data.detail || "Failed to fetch documents");
@@ -52,7 +65,13 @@ export async function deleteDocument(documentId, token) {
     }
   );
 
-  const data = await response.json();
+  let data = {};
+
+  try {
+    data = await response.json();
+  } catch (error) {
+    data = {};
+  }
 
   if (!response.ok) {
     throw new Error(data.detail || "Delete failed");

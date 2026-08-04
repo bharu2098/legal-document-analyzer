@@ -9,7 +9,13 @@ export async function registerUser(userData) {
     body: JSON.stringify(userData),
   });
 
-  const data = await response.json();
+  let data = {};
+
+  try {
+    data = await response.json();
+  } catch (error) {
+    data = {};
+  }
 
   if (!response.ok) {
     throw new Error(data.detail || "Registration failed");
@@ -27,7 +33,13 @@ export async function loginUser(credentials) {
     body: JSON.stringify(credentials),
   });
 
-  const data = await response.json();
+  let data = {};
+
+  try {
+    data = await response.json();
+  } catch (error) {
+    data = {};
+  }
 
   if (!response.ok) {
     throw new Error(data.detail || "Login failed");
@@ -47,5 +59,12 @@ export function getToken() {
 
 export function getCurrentUser() {
   const user = localStorage.getItem("user");
-  return user ? JSON.parse(user) : null;
+
+  if (!user) return null;
+
+  try {
+    return JSON.parse(user);
+  } catch {
+    return null;
+  }
 }
