@@ -180,13 +180,16 @@ async def upload_document(
         raise
 
     except Exception as e:
+    import traceback
 
-        file_path.unlink(missing_ok=True)
+    traceback.print_exc()
 
-        raise HTTPException(
-            status_code=500,
-            detail=f"Upload failed: {str(e)}",
-        )
+    file_path.unlink(missing_ok=True)
+
+    raise HTTPException(
+        status_code=500,
+        detail=f"{type(e).__name__}: {str(e)}",
+    )
 
 
 @router.get("/")
