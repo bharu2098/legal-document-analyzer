@@ -2,26 +2,30 @@ function AuthLayout({ children }) {
   return (
     <div
       className="
-        min-h-screen
-        bg-[#081321]
         relative
+        min-h-screen
         overflow-hidden
+        bg-[#071321]
         flex
         items-center
         justify-center
         px-6
-        py-10
+        py-16
       "
     >
+      {/* Background */}
+
+      <div className="absolute inset-0 bg-gradient-to-br from-[#071321] via-[#0B1626] to-[#0A1322]" />
+
       {/* Left Glow */}
 
       <div
         className="
           absolute
-          -top-64
-          -left-64
-          w-[700px]
+          -top-60
+          -left-60
           h-[700px]
+          w-[700px]
           rounded-full
           bg-blue-600/10
           blur-[170px]
@@ -33,39 +37,40 @@ function AuthLayout({ children }) {
       <div
         className="
           absolute
-          -bottom-64
-          -right-64
-          w-[700px]
+          -bottom-60
+          -right-60
           h-[700px]
+          w-[700px]
           rounded-full
-          bg-indigo-600/10
-          blur-[170px]
+          bg-cyan-500/5
+          blur-[180px]
         "
       />
 
-      {/* Center Glow */}
+      {/* Top Glow */}
 
       <div
         className="
           absolute
+          top-0
           left-1/2
-          top-1/2
           -translate-x-1/2
-          -translate-y-1/2
-          w-[500px]
-          h-[500px]
+          h-[400px]
+          w-[600px]
           rounded-full
           bg-blue-500/5
-          blur-[150px]
+          blur-[140px]
         "
       />
+
+      {/* Content */}
 
       <div
         className="
           relative
           z-10
           w-full
-          max-w-[1200px]
+          max-w-[1280px]
           flex
           justify-center
         "

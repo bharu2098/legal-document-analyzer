@@ -26,10 +26,10 @@ function Register() {
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -67,23 +67,22 @@ function Register() {
 
   return (
     <AuthLayout>
+      <div className="w-full max-w-[560px] mx-auto">
 
-      <div className="w-full max-w-[620px]">
-
-        <AuthHeader
-          subtitle="Create your secure AI Legal account."
-        />
+        <div className="mb-14">
+          <AuthHeader
+            subtitle="Create your secure AI Legal account and start analyzing documents."
+          />
+        </div>
 
         <AuthCard
           title="Create Account"
           subtitle="Register to continue"
         >
-
           <form
             onSubmit={handleSubmit}
-            className="space-y-6"
+            className="space-y-5"
           >
-
             <AuthInput
               label="Username"
               name="username"
@@ -96,8 +95,8 @@ function Register() {
 
             <AuthInput
               label="Email Address"
-              name="email"
               type="email"
+              name="email"
               value={formData.email}
               onChange={handleChange}
               placeholder="Enter your email"
@@ -106,6 +105,7 @@ function Register() {
             />
 
             <PasswordInput
+              label="Password"
               name="password"
               value={formData.password}
               onChange={handleChange}
@@ -124,18 +124,19 @@ function Register() {
 
             <GoogleButton />
 
-            <div className="text-center">
+            <div className="pt-3 text-center">
 
-              <span className="text-slate-400">
+              <span className="text-[15px] text-slate-400">
                 Already have an account?{" "}
               </span>
 
               <Link
                 to="/login"
                 className="
-                  text-blue-400
-                  hover:text-blue-300
                   font-semibold
+                  text-blue-500
+                  hover:text-blue-400
+                  transition-colors
                 "
               >
                 Sign In
@@ -144,13 +145,11 @@ function Register() {
             </div>
 
           </form>
-
         </AuthCard>
 
         <AuthFooter />
 
       </div>
-
     </AuthLayout>
   );
 }

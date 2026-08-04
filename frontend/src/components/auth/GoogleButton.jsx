@@ -4,28 +4,29 @@ function GoogleButton() {
       type="button"
       className="
         w-full
-        h-[58px]
-        rounded-xl
+        h-[60px]
+        rounded-2xl
         border
-        border-slate-700
-        bg-[#111C2B]
-        hover:bg-[#162233]
+        border-slate-600
+        bg-[#142235]
+        hover:bg-[#18293E]
+        hover:border-slate-500
         transition-all
         duration-300
         flex
         items-center
         justify-center
-        gap-4
+        gap-3
         text-white
+        text-[16px]
         font-medium
-        text-base
       "
     >
       {/* Google Logo */}
 
       <svg
-        width="22"
-        height="22"
+        width="20"
+        height="20"
         viewBox="0 0 48 48"
       >
         <path
@@ -49,7 +50,7 @@ function GoogleButton() {
         />
       </svg>
 
-      Continue with Google
+      <span>Continue with Google</span>
     </button>
   );
 }

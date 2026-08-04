@@ -9,17 +9,16 @@ function AuthInput({
   autoComplete,
 }) {
   return (
-    <div className="mb-6">
+    <div className="space-y-3">
 
       {/* Label */}
 
       <label
         className="
           block
-          text-sm
+          text-[15px]
           font-medium
           text-slate-300
-          mb-3
         "
       >
         {label}
@@ -38,6 +37,7 @@ function AuthInput({
             top-1/2
             -translate-y-1/2
             text-slate-500
+            pointer-events-none
           "
         >
           {icon}
@@ -52,22 +52,25 @@ function AuthInput({
           autoComplete={autoComplete}
           className="
             w-full
-            h-[58px]
-            rounded-xl
+            h-[60px]
+            rounded-2xl
             border
-            border-slate-700
-            bg-[#111C2B]
+            border-slate-600
+            bg-[#142235]
             pl-14
             pr-5
+            text-[16px]
             text-white
             placeholder:text-slate-500
-            text-base
             outline-none
             transition-all
             duration-300
+
             focus:border-blue-500
-            focus:ring-4
-            focus:ring-blue-500/10
+            focus:ring-2
+            focus:ring-blue-500/20
+
+            hover:border-slate-500
           "
         />
 

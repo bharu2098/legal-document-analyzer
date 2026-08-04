@@ -27,10 +27,10 @@ function Login() {
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -63,27 +63,26 @@ function Login() {
 
   return (
     <AuthLayout>
+      <div className="w-full max-w-[560px] mx-auto">
 
-      <div className="w-full max-w-[620px]">
-
-        <AuthHeader
-          subtitle="Securely sign in to analyze your legal documents using AI."
-        />
+        <div className="mb-14">
+          <AuthHeader
+            subtitle="Securely sign in to analyze your legal documents using AI."
+          />
+        </div>
 
         <AuthCard
           title="Welcome Back"
-          subtitle="Sign in to continue"
+          subtitle="Sign in to continue to your secure workspace"
         >
-
           <form
             onSubmit={handleSubmit}
-            className="space-y-6"
+            className="space-y-5"
           >
-
             <AuthInput
               label="Email Address"
-              name="email"
               type="email"
+              name="email"
               value={formData.email}
               onChange={handleChange}
               placeholder="Enter your email"
@@ -92,6 +91,7 @@ function Login() {
             />
 
             <PasswordInput
+              label="Password"
               name="password"
               value={formData.password}
               onChange={handleChange}
@@ -99,15 +99,15 @@ function Login() {
               autoComplete="current-password"
             />
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between pt-1 pb-2">
 
-              <label className="flex items-center gap-3 text-slate-300 text-sm">
+              <label className="flex items-center gap-3 text-[15px] text-slate-300 cursor-pointer">
 
                 <input
                   type="checkbox"
                   checked={remember}
                   onChange={() => setRemember(!remember)}
-                  className="w-4 h-4 accent-blue-600"
+                  className="h-4 w-4 accent-blue-600"
                 />
 
                 Remember me
@@ -116,7 +116,12 @@ function Login() {
 
               <button
                 type="button"
-                className="text-blue-400 hover:text-blue-300 text-sm"
+                className="
+                  text-[15px]
+                  text-blue-400
+                  hover:text-blue-300
+                  transition-colors
+                "
               >
                 Forgot Password?
               </button>
@@ -134,15 +139,20 @@ function Login() {
 
             <GoogleButton />
 
-            <div className="text-center">
+            <div className="pt-3 text-center">
 
-              <span className="text-slate-400">
+              <span className="text-[15px] text-slate-400">
                 Don't have an account?{" "}
               </span>
 
               <Link
                 to="/register"
-                className="text-blue-400 hover:text-blue-300 font-semibold"
+                className="
+                  font-semibold
+                  text-blue-500
+                  hover:text-blue-400
+                  transition-colors
+                "
               >
                 Create Account
               </Link>
@@ -150,13 +160,11 @@ function Login() {
             </div>
 
           </form>
-
         </AuthCard>
 
         <AuthFooter />
 
       </div>
-
     </AuthLayout>
   );
 }
