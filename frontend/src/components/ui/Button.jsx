@@ -8,11 +8,11 @@ function Button({
   onClick,
 }) {
   const baseStyle =
-    "rounded-xl font-semibold transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed";
+    "rounded-2xl font-semibold transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]";
 
   const variants = {
     primary:
-      "bg-blue-600 hover:bg-blue-700 text-white",
+      "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white shadow-lg shadow-blue-900/30",
 
     secondary:
       "bg-slate-700 hover:bg-slate-600 text-white",
@@ -32,7 +32,7 @@ function Button({
 
     md: "h-12 px-5 text-base",
 
-    lg: "h-12 px-6 text-base",
+    lg: "h-13 px-6 text-base",
   };
 
   return (

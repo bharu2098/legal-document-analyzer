@@ -26,8 +26,8 @@ function Register() {
             <br />
 
             Get AI-powered legal insights, summaries,
-            clause extraction, and semantic search
-            in one secure platform.
+            clause extraction, semantic search, and AI-powered
+            document analysis in one secure platform.
           </p>
 
         </div>
@@ -36,9 +36,13 @@ function Register() {
 
       {/* ================= RIGHT SECTION ================= */}
 
-      <div className="flex w-full lg:w-1/2 items-center justify-center bg-[#07182b] px-10">
+      <div className="flex w-full lg:w-1/2 items-center justify-center bg-[#07182b] px-8 py-10">
 
-        <RegisterForm />
+        <div className="w-full max-w-[460px]">
+
+          <RegisterForm />
+
+        </div>
 
       </div>
 

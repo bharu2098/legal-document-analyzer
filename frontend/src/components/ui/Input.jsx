@@ -24,18 +24,22 @@ function Input({
         placeholder={placeholder}
         className="
           w-full
-          h-12
-          rounded-xl
+          h-13
+          rounded-2xl
           border
-          border-slate-600
-          bg-slate-800
-          px-4
+          border-slate-700
+          bg-[#1a3148]
+          px-5
+          text-[15px]
           text-white
-          placeholder:text-slate-400
+          placeholder:text-slate-500
           outline-none
           transition-all
           duration-200
+          hover:border-slate-500
+          hover:bg-[#20384f]
           focus:border-blue-500
+          focus:bg-[#20384f]
           focus:ring-2
           focus:ring-blue-500/20
         "

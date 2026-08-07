@@ -46,13 +46,13 @@ function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-[420px] bg-[#102944] rounded-3xl shadow-2xl p-12">
+    <div className="w-full max-w-[420px] rounded-3xl bg-[#102944] p-10 shadow-2xl">
 
-      <h1 className="text-5xl font-bold text-center text-blue-500">
+      <h1 className="text-center text-5xl font-bold text-blue-500">
         AI Legal
       </h1>
 
-      <h2 className="mt-6 text-3xl font-semibold text-center text-white">
+      <h2 className="mt-6 text-center text-3xl font-semibold text-white">
         Welcome Back 👋
       </h2>
 
@@ -60,7 +60,10 @@ function LoginForm() {
         Login to continue
       </p>
 
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-0"
+      >
 
         <Input
           name="email"
@@ -78,7 +81,7 @@ function LoginForm() {
           onChange={handleChange}
         />
 
-        <div className="mt-2">
+        <div className="pt-2">
           <Button
             type="submit"
             fullWidth
