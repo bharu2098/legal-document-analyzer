@@ -9,8 +9,9 @@ function Input({
 }) {
   return (
     <div className="space-y-2">
+
       {label && (
-        <label className="block text-sm font-medium text-slate-300">
+        <label className="block text-sm font-semibold text-slate-300">
           {label}
         </label>
       )}
@@ -23,28 +24,30 @@ function Input({
         placeholder={placeholder}
         className="
           w-full
-          rounded-xl
-          bg-[#1d3550]
+          rounded-2xl
           border
           border-slate-700
-          px-4
-          py-3.5
+          bg-[#19324a]
+          px-5
+          py-4
           text-white
-          placeholder:text-slate-400
+          placeholder:text-slate-500
           outline-none
           transition-all
-          duration-200
+          duration-300
           focus:border-blue-500
-          focus:ring-2
-          focus:ring-blue-500/30
+          focus:ring-4
+          focus:ring-blue-500/20
+          hover:border-slate-500
         "
       />
 
       {error && (
-        <p className="text-sm text-red-500">
+        <p className="text-sm text-red-400 font-medium">
           {error}
         </p>
       )}
+
     </div>
   );
 }

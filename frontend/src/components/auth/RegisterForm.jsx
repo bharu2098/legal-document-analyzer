@@ -53,79 +53,129 @@ function RegisterForm() {
   };
 
   return (
-    <div className="w-full max-w-md bg-[#10253b] rounded-3xl shadow-2xl p-10">
+    <div className="w-full max-w-lg">
 
-      <h1 className="text-5xl font-bold text-center text-blue-500">
-        AI Legal
-      </h1>
+      <div className="bg-[#102944]/95 backdrop-blur-xl border border-slate-700 rounded-3xl shadow-2xl shadow-blue-900/20 p-10">
 
-      <h2 className="text-4xl font-semibold text-center text-white mt-6">
-        Create Account 🚀
-      </h2>
+        {/* Logo */}
 
-      <p className="text-center text-gray-400 mt-3 mb-10">
-        Register to continue
-      </p>
+        <div className="flex justify-center mb-6">
 
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-6"
-      >
+          <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-4xl shadow-lg">
 
-        <Input
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
-        />
+            🚀
 
-        <Input
-          name="email"
-          type="email"
-          placeholder="Email Address"
-          value={formData.email}
-          onChange={handleChange}
-        />
+          </div>
 
-        <Input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+        </div>
 
-        <Input
-          name="confirmPassword"
-          type="password"
-          placeholder="Confirm Password"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-        />
+        {/* Heading */}
 
-        <Button
-          type="submit"
-          fullWidth
-          disabled={loading}
+        <h1 className="text-4xl font-bold text-center text-white">
+
+          Create Account
+
+        </h1>
+
+        <p className="text-center text-slate-400 mt-3 mb-10">
+
+          Join
+
+          <span className="text-blue-400 font-semibold">
+            {" "}AI Legal Document Analyzer
+          </span>
+
+          <br />
+
+          and start analyzing legal documents.
+
+        </p>
+
+        {/* Form */}
+
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-7"
         >
-          {loading
-            ? "Creating Account..."
-            : "Register"}
-        </Button>
 
-        <p className="text-center text-gray-400">
+          <Input
+            label="Username"
+            name="username"
+            placeholder="Enter your username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+
+          <Input
+            label="Email Address"
+            name="email"
+            type="email"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+
+          <Input
+            label="Password"
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+
+          <Input
+            label="Confirm Password"
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirm your password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+          />
+
+          <Button
+            type="submit"
+            fullWidth
+            size="lg"
+            disabled={loading}
+          >
+            {loading
+              ? "Creating Account..."
+              : "Register"}
+          </Button>
+
+        </form>
+
+        {/* Divider */}
+
+        <div className="flex items-center my-8">
+
+          <div className="flex-1 h-px bg-slate-700"></div>
+
+          <span className="px-4 text-slate-500 text-sm">
+            OR
+          </span>
+
+          <div className="flex-1 h-px bg-slate-700"></div>
+
+        </div>
+
+        {/* Footer */}
+
+        <p className="text-center text-slate-400">
+
           Already have an account?
 
           <Link
             to="/login"
-            className="ml-2 text-blue-500 font-semibold hover:text-blue-400"
+            className="ml-2 text-blue-400 font-semibold hover:text-blue-300 transition-colors"
           >
             Login
           </Link>
 
         </p>
 
-      </form>
+      </div>
 
     </div>
   );
