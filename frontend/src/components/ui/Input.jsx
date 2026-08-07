@@ -24,7 +24,7 @@ function Input({
         placeholder={placeholder}
         className="
           w-full
-          h-13
+          h-12
           rounded-xl
           border
           border-slate-600

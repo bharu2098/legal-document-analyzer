@@ -46,13 +46,13 @@ function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md bg-[#102944] rounded-3xl shadow-2xl p-12">
+    <div className="w-full max-w-[420px] bg-[#102944] rounded-3xl shadow-2xl p-12">
 
       <h1 className="text-5xl font-bold text-center text-blue-500">
         AI Legal
       </h1>
 
-      <h2 className="mt-8 text-3xl font-semibold text-center text-white">
+      <h2 className="mt-6 text-3xl font-semibold text-center text-white">
         Welcome Back 👋
       </h2>
 
@@ -78,14 +78,16 @@ function LoginForm() {
           onChange={handleChange}
         />
 
-        <Button
-          type="submit"
-          fullWidth
-          size="lg"
-          disabled={loading}
-        >
-          {loading ? "Logging in..." : "Login"}
-        </Button>
+        <div className="mt-2">
+          <Button
+            type="submit"
+            fullWidth
+            size="lg"
+            disabled={loading}
+          >
+            {loading ? "Logging in..." : "Login"}
+          </Button>
+        </div>
 
       </form>
 
