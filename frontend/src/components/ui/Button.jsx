@@ -7,14 +7,12 @@ function Button({
   disabled = false,
   onClick,
 }) {
-
   const baseStyle =
-    "rounded-2xl font-semibold transition-all duration-300 ease-in-out cursor-pointer focus:outline-none focus:ring-4 focus:ring-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95";
+    "rounded-xl font-semibold transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed";
 
   const variants = {
-
     primary:
-      "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white shadow-lg shadow-blue-900/30",
+      "bg-blue-600 hover:bg-blue-700 text-white",
 
     secondary:
       "bg-slate-700 hover:bg-slate-600 text-white",
@@ -26,22 +24,18 @@ function Button({
       "bg-green-600 hover:bg-green-700 text-white",
 
     outline:
-      "border border-slate-600 text-white hover:bg-slate-800",
-
+      "border border-slate-600 bg-transparent text-white hover:bg-slate-800",
   };
 
   const sizes = {
+    sm: "h-10 px-4 text-sm",
 
-    sm: "px-4 py-2 text-sm",
+    md: "h-12 px-5 text-base",
 
-    md: "px-6 py-3.5 text-base",
-
-    lg: "px-6 py-4 text-lg",
-
+    lg: "h-12 px-6 text-base",
   };
 
   return (
-
     <button
       type={type}
       disabled={disabled}
@@ -53,13 +47,9 @@ function Button({
         ${fullWidth ? "w-full" : ""}
       `}
     >
-
       {children}
-
     </button>
-
   );
-
 }
 
 export default Button;

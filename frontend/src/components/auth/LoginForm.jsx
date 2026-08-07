@@ -46,64 +46,73 @@ function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full rounded-3xl bg-[#102944] p-12 shadow-2xl">
 
-      <div className="bg-[#102944] rounded-3xl shadow-2xl p-10">
+      {/* Logo */}
 
-        <h1 className="text-5xl font-bold text-center text-blue-500">
-          AI Legal
-        </h1>
+      <h1 className="text-center text-5xl font-bold text-blue-500">
+        AI Legal
+      </h1>
 
-        <h2 className="text-3xl font-semibold text-center text-white mt-6">
-          Welcome Back 👋
-        </h2>
+      {/* Heading */}
 
-        <p className="text-center text-slate-400 mt-3 mb-10">
-          Login to continue
-        </p>
+      <h2 className="mt-6 text-center text-4xl font-semibold text-white">
+        Welcome Back 👋
+      </h2>
 
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-6"
+      <p className="mt-3 mb-10 text-center text-slate-400">
+        Login to continue
+      </p>
+
+      {/* Form */}
+
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-6"
+      >
+
+        <Input
+          name="email"
+          type="email"
+          placeholder="Email Address"
+          value={formData.email}
+          onChange={handleChange}
+        />
+
+        <Input
+          name="password"
+          type="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+        />
+
+        <Button
+          type="submit"
+          size="lg"
+          fullWidth
+          disabled={loading}
         >
+          {loading ? "Logging in..." : "Login"}
+        </Button>
 
-          <Input
-            name="email"
-            type="email"
-            placeholder="Email Address"
-            value={formData.email}
-            onChange={handleChange}
-          />
+      </form>
 
-          <Input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-          />
+      {/* Footer */}
 
-          <Button
-            type="submit"
-            fullWidth
-            disabled={loading}
+      <div className="mt-10 text-center">
+
+        <p className="text-slate-400">
+          Don't have an account?
+
+          <Link
+            to="/register"
+            className="ml-2 font-semibold text-blue-500 transition hover:text-blue-400"
           >
-            {loading ? "Logging in..." : "Login"}
-          </Button>
+            Register
+          </Link>
 
-          <p className="text-center text-slate-400 pt-2">
-            Don't have an account?
-
-            <Link
-              to="/register"
-              className="ml-2 text-blue-500 font-semibold hover:text-blue-400"
-            >
-              Register
-            </Link>
-
-          </p>
-
-        </form>
+        </p>
 
       </div>
 
