@@ -46,33 +46,32 @@ function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md rounded-2xl bg-slate-900 p-8 shadow-2xl">
-      <h2 className="text-3xl font-bold text-white">
-        Welcome Back
+    <div className="w-full max-w-md bg-[#10253b] rounded-3xl shadow-2xl p-10">
+      <h1 className="text-5xl font-bold text-center text-blue-500">
+        AI Legal
+      </h1>
+
+      <h2 className="text-4xl font-semibold text-center text-white mt-6">
+        Welcome Back 👋
       </h2>
 
-      <p className="mt-2 mb-8 text-gray-400">
+      <p className="text-center text-gray-400 mt-3 mb-10">
         Login to continue
       </p>
 
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-5"
-      >
+      <form onSubmit={handleSubmit} className="space-y-6">
         <Input
-          label="Email"
           name="email"
           type="email"
-          placeholder="Enter your email"
+          placeholder="Email Address"
           value={formData.email}
           onChange={handleChange}
         />
 
         <Input
-          label="Password"
           name="password"
           type="password"
-          placeholder="Enter your password"
+          placeholder="Password"
           value={formData.password}
           onChange={handleChange}
         />
@@ -90,7 +89,7 @@ function LoginForm() {
 
           <Link
             to="/register"
-            className="ml-2 text-blue-400 hover:underline"
+            className="ml-2 text-blue-500 font-semibold hover:text-blue-400"
           >
             Register
           </Link>

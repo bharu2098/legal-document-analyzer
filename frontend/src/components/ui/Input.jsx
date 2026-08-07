@@ -8,9 +8,9 @@ function Input({
   error,
 }) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="space-y-2">
       {label && (
-        <label className="text-sm text-gray-300">
+        <label className="block text-sm font-medium text-slate-300">
           {label}
         </label>
       )}
@@ -23,22 +23,27 @@ function Input({
         placeholder={placeholder}
         className="
           w-full
-          rounded-lg
+          rounded-xl
+          bg-[#1d3550]
           border
-          border-slate-600
-          bg-slate-800
+          border-slate-700
           px-4
-          py-3
+          py-3.5
           text-white
+          placeholder:text-slate-400
           outline-none
+          transition-all
+          duration-200
           focus:border-blue-500
+          focus:ring-2
+          focus:ring-blue-500/30
         "
       />
 
       {error && (
-        <span className="text-sm text-red-500">
+        <p className="text-sm text-red-500">
           {error}
-        </span>
+        </p>
       )}
     </div>
   );
