@@ -53,27 +53,21 @@ function RegisterForm() {
   };
 
   return (
-    <div className="w-full rounded-3xl bg-[#102944] p-12 shadow-2xl">
+    <div className="w-full max-w-md bg-[#102944] rounded-3xl shadow-2xl p-12">
 
-      {/* Logo */}
-      <h1 className="text-center text-5xl font-bold text-blue-500">
+      <h1 className="text-5xl font-bold text-center text-blue-500">
         AI Legal
       </h1>
 
-      {/* Heading */}
-      <h2 className="mt-6 text-center text-4xl font-semibold text-white">
+      <h2 className="mt-8 text-3xl font-semibold text-center text-white">
         Create Account
       </h2>
 
-      <p className="mt-3 mb-10 text-center text-slate-400">
+      <p className="mt-3 mb-8 text-center text-slate-400">
         Register to continue
       </p>
 
-      {/* Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-6"
-      >
+      <form onSubmit={handleSubmit}>
 
         <Input
           name="username"
@@ -108,8 +102,8 @@ function RegisterForm() {
 
         <Button
           type="submit"
-          size="lg"
           fullWidth
+          size="lg"
           disabled={loading}
         >
           {loading ? "Creating Account..." : "Register"}
@@ -117,16 +111,14 @@ function RegisterForm() {
 
       </form>
 
-      {/* Footer */}
-      <div className="mt-10 text-center">
+      <div className="mt-8 text-center">
 
         <p className="text-slate-400">
-
           Already have an account?
 
           <Link
             to="/login"
-            className="ml-2 font-semibold text-blue-500 transition hover:text-blue-400"
+            className="ml-2 font-semibold text-blue-500 hover:text-blue-400"
           >
             Login
           </Link>
